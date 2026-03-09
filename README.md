@@ -29,7 +29,7 @@ Open dan [http://localhost:3000](http://localhost:3000)
 ## GitHub Pages
 
 De app is beschikbaar via GitHub Pages:
-👉 **https://[username].github.io/MijnStudiepad/**
+👉 **https://mmaartijn.github.io/MijnStudiepad/**
 
 ## Opleidingen toevoegen
 
