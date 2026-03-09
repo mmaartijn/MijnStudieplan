@@ -1,0 +1,1239 @@
+/* ============================================================
+   Mijn Studiepad – Stylesheet (scherm + afdruk)
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #eff6ff;
+  --success: #16a34a;
+  --success-light: #f0fdf4;
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --muted: #64748b;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   HEADER / STAP-INDICATOR
+   ============================================================ */
+header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.header-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+/* Step indicator */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  font-size: .85rem;
+  color: var(--muted);
+  border-radius: var(--radius);
+}
+
+.step.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.step.done {
+  color: var(--success);
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step.active .step-num {
+  background: var(--primary);
+  color: #fff;
+}
+
+.step.done .step-num {
+  background: var(--success);
+  color: #fff;
+}
+
+.step-conn {
+  width: 24px;
+  height: 2px;
+  background: var(--border);
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+main {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+
+.step-content h2 {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: .925rem;
+  margin-bottom: 24px;
+}
+
+/* ============================================================
+   STEP 1 – OPLEIDING KIEZEN
+   ============================================================ */
+.opleiding-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.opleiding-card {
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+
+.opleiding-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.opleiding-icon {
+  font-size: 2.4rem;
+}
+
+.opleiding-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.opleiding-code {
+  font-size: .78rem;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   STEP 2 – LEERUITKOMSTEN
+   ============================================================ */
+.step2-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.overall-progress {
+  min-width: 210px;
+}
+
+.progress-label {
+  font-size: .8rem;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--success);
+  border-radius: 4px;
+  transition: width .3s;
+}
+
+.step2-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+/* Module card */
+.module-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .15s;
+}
+
+.module-card.complete {
+  border-color: #bbf7d0;
+  background: var(--success-light);
+}
+
+.module-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  gap: 12px;
+}
+
+.module-header:hover {
+  background: var(--bg);
+}
+
+.module-card.complete .module-header:hover {
+  background: #dcfce7;
+}
+
+.module-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.module-code {
+  font-family: monospace;
+  font-size: .8rem;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.module-name {
+  font-weight: 500;
+  font-size: .9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.module-card.complete .module-code {
+  background: #dcfce7;
+  color: var(--success);
+}
+
+.module-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.module-progress-text {
+  font-size: .78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.mini-progress {
+  width: 70px;
+  height: 5px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mini-bar {
+  height: 100%;
+  background: var(--success);
+  border-radius: 3px;
+}
+
+.toggle-icon {
+  color: var(--muted);
+  font-size: .7rem;
+  width: 16px;
+  text-align: center;
+}
+
+/* Outcomes */
+.module-outcomes {
+  border-top: 1px solid var(--border);
+}
+
+.outcome-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background .12s;
+}
+
+.outcome-item:hover {
+  background: var(--bg);
+}
+
+.outcome-item input[type="checkbox"] {
+  margin-top: 3px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--success);
+}
+
+.outcome-item.achieved .outcome-content {
+  opacity: .55;
+}
+
+.outcome-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.outcome-name {
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.outcome-qual {
+  font-size: .72rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.module-actions {
+  display: flex;
+  gap: 14px;
+  padding: 7px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.module-card.complete .module-actions {
+  background: #f0fdf4;
+}
+
+.no-outcomes {
+  padding: 10px 16px;
+  color: var(--muted);
+  font-style: italic;
+  font-size: .85rem;
+}
+
+/* ============================================================
+   STEP 3 – STUDIEPLAN
+   ============================================================ */
+.student-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 22px;
+}
+
+.form-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-row label {
+  flex: 1;
+  min-width: 190px;
+  font-size: .82rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-row input {
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  color: var(--text);
+  font-family: inherit;
+  transition: border-color .2s;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Planning layout */
+.planning-area {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.unplanned-section {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.badge {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 999px;
+  padding: 1px 6px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.periods-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.periods-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.periods-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+/* Period column */
+.period-col {
+  min-width: 175px;
+  width: 175px;
+  flex-shrink: 0;
+}
+
+.period-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.period-name {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text);
+  padding: 2px 4px;
+  border-radius: 4px;
+  outline: none;
+  flex: 1;
+}
+
+.period-name:focus {
+  background: var(--primary-light);
+}
+
+/* Drop zones */
+.drop-zone {
+  min-height: 110px;
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: border-color .15s, background .15s;
+  position: relative;
+}
+
+.drop-zone.drag-over {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.unplanned-zone {
+  min-height: 170px;
+}
+
+.drop-hint {
+  font-size: .72rem;
+  color: var(--border);
+  text-align: center;
+  padding: 6px;
+  pointer-events: none;
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+}
+
+.all-planned {
+  font-size: .85rem;
+  color: var(--success);
+  text-align: center;
+  padding: 14px 8px;
+  font-weight: 500;
+}
+
+/* Plan module card */
+.plan-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 10px;
+  cursor: grab;
+  box-shadow: var(--shadow);
+  transition: box-shadow .15s, border-color .15s, opacity .15s;
+}
+
+.plan-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.plan-card.dragging {
+  opacity: .4;
+  cursor: grabbing;
+}
+
+.plan-card-hdr {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.plan-card-hdr .module-code {
+  font-size: .72rem;
+}
+
+.plan-card-name {
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.remaining-list {
+  list-style: none;
+  padding: 0;
+}
+
+.remaining-list li {
+  font-size: .72rem;
+  color: var(--muted);
+  padding: 1px 0 1px 10px;
+  position: relative;
+  line-height: 1.35;
+}
+
+.remaining-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  padding: 9px 22px;
+  border-radius: var(--radius);
+  border: none;
+  font-size: .9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg);
+}
+
+.btn-print {
+  background: #1e293b;
+  color: #fff;
+}
+
+.btn-print:hover {
+  background: #0f172a;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: .8rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+.btn-link:hover {
+  color: var(--primary-dark);
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.btn-icon:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.step-nav-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Loading / error */
+.loading {
+  color: var(--muted);
+  padding: 24px;
+  text-align: center;
+}
+
+.error {
+  color: #dc2626;
+  padding: 14px 16px;
+  background: #fef2f2;
+  border-radius: var(--radius);
+  border: 1px solid #fecaca;
+  font-size: .9rem;
+}
+
+.warning {
+  color: #92400e;
+  padding: 12px 16px;
+  background: #fffbeb;
+  border-radius: var(--radius);
+  border: 1px solid #fde68a;
+  font-size: .875rem;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   PRINT VIEW  –  verborgen op scherm
+   ============================================================ */
+.print-view {
+  display: none;
+}
+
+/* ============================================================
+   @MEDIA PRINT
+   ============================================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 18mm 18mm 22mm;
+  }
+
+  header,
+  main {
+    display: none !important;
+  }
+
+  .print-view {
+    display: block !important;
+    font-family: Arial, sans-serif;
+    font-size: 10.5pt;
+    color: #000;
+  }
+
+  .pv-title {
+    text-align: center;
+    font-size: 16pt;
+    font-weight: bold;
+    margin-bottom: 12pt;
+    letter-spacing: .5pt;
+  }
+
+  .pv-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 14pt;
+  }
+
+  .pv-info-table td {
+    border: 1px solid #aaa;
+    padding: 4pt 7pt;
+    font-size: 10pt;
+  }
+
+  .pv-section-title {
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 14pt 0 6pt;
+    border-bottom: 1.5pt solid #333;
+    padding-bottom: 3pt;
+  }
+
+  .pv-plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 18pt;
+  }
+
+  .pv-plan-table th {
+    background: #e8e8e8;
+    border: 1px solid #888;
+    padding: 5pt 7pt;
+    text-align: left;
+    font-size: 10pt;
+  }
+
+  .pv-plan-table td {
+    border: 1px solid #bbb;
+    padding: 4pt 7pt;
+    vertical-align: top;
+    font-size: 9.5pt;
+  }
+
+  .pv-plan-table ul {
+    margin: 0;
+    padding-left: 13pt;
+  }
+
+  .pv-plan-table li {
+    margin-bottom: 2pt;
+  }
+
+  .pv-period-cell {
+    font-weight: 600;
+    white-space: nowrap;
+    background: #f4f4f4;
+    width: 22%;
+  }
+
+  .pv-no-rows td {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+  }
+
+  .pv-sigs {
+    display: flex;
+    gap: 36pt;
+    margin-top: 28pt;
+    page-break-inside: avoid;
+  }
+
+  .pv-sig-block {
+    flex: 1;
+  }
+
+  .pv-sig-label {
+    font-size: 10pt;
+    margin-bottom: 4pt;
+  }
+
+  .pv-sig-line {
+    border-bottom: 1pt solid #000;
+    height: 36pt;
+    margin-bottom: 6pt;
+  }
+
+  .pv-sig-date {
+    font-size: 9.5pt;
+  }
+
+  .pv-note {
+    font-size: 9pt;
+    color: #555;
+    border: 1pt solid #ccc;
+    padding: 6pt 8pt;
+    margin-bottom: 10pt;
+    page-break-inside: avoid;
+  }
+
+  .pv-ec-cell {
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    background: #f4f4f4;
+  }
+
+  .pv-comments {
+    margin: 4pt 0 18pt;
+    padding-left: 16pt;
+  }
+
+  .pv-comments li {
+    margin-bottom: 4pt;
+    font-size: 10pt;
+  }
+}
+
+/* ============================================================
+   CURRICULUM GRID (stap 2 – leesbaar overzicht)
+   ============================================================ */
+.curriculum-section {
+  margin-bottom: 22px;
+}
+
+.curriculum-summary {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 8px 12px;
+  background: var(--primary-light);
+  border-radius: var(--radius);
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.curriculum-summary::-webkit-details-marker { display: none; }
+.curriculum-summary::before {
+  content: '▶';
+  font-size: .65rem;
+  transition: transform .2s;
+}
+details[open] .curriculum-summary::before { transform: rotate(90deg); }
+
+.curriculum-grid-outer {
+  padding: 14px 0 6px;
+  overflow-x: auto;
+}
+
+.curriculum-grid {
+  display: grid;
+  grid-template-columns: 72px repeat(4, 1fr);
+  gap: 4px;
+  min-width: 520px;
+}
+
+.cg-corner {
+  /* empty top-left cell */
+}
+
+.cg-header {
+  background: var(--primary);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 4px;
+  border-radius: 4px;
+}
+
+.cg-year-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: 4px;
+  padding: 4px;
+  text-align: center;
+}
+
+.cg-cell {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px;
+  min-height: 52px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 3px;
+}
+
+.curriculum-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 4px;
+}
+
+/* Chips (module badges in curriculum grid) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: .72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.chip-done {
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid #bbf7d0;
+}
+
+.chip-partial {
+  background: #fef9c3;
+  color: #a16207;
+  border: 1px solid #fde68a;
+}
+
+.chip-todo {
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   PLAN GRID (stap 3 – 4×4 sleep-grid)
+   ============================================================ */
+.plan-grid-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-grid-wrapper {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: 56px repeat(4, minmax(150px, 1fr));
+  gap: 6px;
+  min-width: 660px;
+}
+
+.pg-corner {
+  /* empty top-left */
+}
+
+.pg-header {
+  background: var(--primary);
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 7px 4px;
+  border-radius: var(--radius);
+}
+
+.pg-year-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: var(--radius);
+  padding: 4px;
+  text-align: center;
+  writing-mode: horizontal-tb;
+}
+
+.pg-cell {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 130px;
+}
+
+.pg-cell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.ec-badge {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: 10px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.ec-badge:empty::before {
+  content: '0 EC';
+  opacity: .5;
+}
+
+/* Comment toggle button (+/💬) */
+.comment-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .78rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: background .15s, border-color .15s;
+}
+
+.comment-toggle:hover {
+  background: var(--bg);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.comment-toggle.has-comment {
+  background: #fef9c3;
+  border-color: #fde68a;
+  color: #a16207;
+}
+
+/* Comment textarea */
+.period-comment {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 7px;
+  font-size: .75rem;
+  font-family: inherit;
+  color: var(--text);
+  resize: vertical;
+  min-height: 52px;
+  background: #fffbeb;
+  transition: border-color .2s;
+}
+
+.period-comment:focus {
+  outline: none;
+  border-color: #fbbf24;
+}
+
+/* EC in plan card header */
+.plan-card-ec {
+  margin-left: auto;
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: 8px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* EC shown per outcome in step 2 */
+.outcome-ec {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: 8px;
+  padding: 0px 5px;
+  display: inline-block;
+  margin-bottom: 1px;
+}
+
+/* ============================================================
+   OPSLAAN-KNOP
+   ============================================================ */
+.btn-save {
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid #bbf7d0;
+}
+.btn-save:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+/* Kleine variant voor in de banner */
+.btn-sm {
+  padding: 6px 14px;
+  font-size: .82rem;
+}
+
+/* ============================================================
+   RESUME BANNER (herstel opgeslagen studiepad)
+   ============================================================ */
+.resume-banner {
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.resume-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.resume-text {
+  flex: 1;
+  font-size: .92rem;
+  color: var(--text);
+}
+
+@media (max-width: 500px) {
+  .resume-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
