@@ -1,6 +1,7 @@
 'use client';
 
 import { parseJSON, distributeItemsByStudiepad } from '@/lib/utils';
+import { Toaster, toast } from 'react-hot-toast';
 
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
@@ -95,7 +96,7 @@ export default function Home() {
       timestamp: new Date().toISOString()
     };
     localStorage.setItem('mijnStudiepad', JSON.stringify(data));
-    alert('Studieplan succesvol opgeslagen! (Lokaal in browser)');
+    toast.success('Studieplan opgeslagen! (Lokaal)');
   };
 
   return (
@@ -149,6 +150,7 @@ export default function Home() {
         planGrid={planGrid}
         achieved={achieved}
       />
+      <Toaster position="bottom-right" />
     </div>
   );
 }

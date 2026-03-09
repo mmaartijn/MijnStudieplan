@@ -10,13 +10,13 @@ export default function Header({ step, onSave, onPrint }: { step: number, onSave
                     <div className="flex gap-2.5 items-center">
                         <button
                             onClick={onSave}
-                            className="px-3.5 py-1.5 bg-success-light text-success border border-[var(--color-success)] rounded-radius text-[0.82rem] font-medium hover:bg-[#dcfce7] transition-colors"
+                            className="px-4 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-300 rounded text-[0.85rem] font-semibold hover:bg-emerald-100 transition-all shadow-sm cursor-pointer"
                         >
                             💾 Opslaan
                         </button>
                         <button
                             onClick={onPrint}
-                            className="px-3.5 py-1.5 bg-slate-800 text-white rounded-radius text-[0.82rem] font-medium hover:bg-slate-900 transition-colors"
+                            className="px-3.5 py-1.5 bg-slate-800 text-white rounded-radius text-[0.82rem] font-medium hover:bg-slate-900 transition-colors cursor-pointer"
                         >
                             🖨 Afdrukken / PDF
                         </button>
