@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(dir \"C:\\\\Users\\\\Martijn\\\\Desktop\\\\Informatica\\\\MijnStudiepad\" /s /b)",
+      "Bash(findstr /v \".claude\")",
+      "Bash(Get-Content \"C:\\\\Users\\\\Martijn\\\\Desktop\\\\Informatica\\\\MijnStudiepad\\\\style.css\")",
+      "Bash(Measure-Object -Line)",
+      "Bash(gh api user --jq '.login')",
+      "Bash(gh auth status)",
+      "Bash(git --version)",
+      "Bash(curl --version)"
+    ]
+  }
+}

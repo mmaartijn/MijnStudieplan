@@ -11,7 +11,8 @@ function initGrid() {
   const g = {};
   for (let y = 1; y <= 4; y++)
     for (let p = 1; p <= 4; p++)
-      g[`y${y}p${p}`] = { codes: [], comment: '' };
+      g[`y${y}p${p}`] = { items: [], comment: '' };
+  // items: [{ code: string, idx: number }]
   return g;
 }
 function gridKey(y, p) { return `y${y}p${p}`; }
@@ -26,18 +27,16 @@ const LS_KEY = 'mijn-studiepad-v1';
 // ============================================================
 const S = {
   step: 1,
-  opleiding: null,    // { code, displayName }
-  modules: [],       // [{ code, name, jaar, periodes, outcomes:[{ name, qualification, studiepunten }] }]
-  achieved: new Set(),// "moduleCode|outcomeIndex"
+  opleiding: null,      // { code, displayName }
+  modules: [],          // [{ code, name, jaar, periodes: [[...]], outcomes:[{name, studiepunten, qualification}] }]
+  achieved: new Set(),  // "moduleCode|outcomeIndex"
   plan: {
-    grid: initGrid(), // { 'y1p1': { codes:[], comment:'' }, ... }
-    unplanned: [],    // module codes not yet placed
+    grid: initGrid(),   // { 'y1p1': { items:[{code,idx}], comment:'' }, ... }
   },
   student: { name: '', number: '', coach: '', date: todayNL() },
-  expanded: new Set(),// module codes expanded in step 2
-  drag: { code: null, from: null },
-  commentOpen: new Set(), // grid keys with open comment textarea
-  lastSaved: null,   // string "14:32" na opslaan, null indien nog niet opgeslagen
+  drag: { code: null, idx: null, from: null },
+  commentOpen: new Set(),
+  lastSaved: null,
 };
 
 // ============================================================
@@ -52,73 +51,35 @@ function esc(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
-function remaining(mod) {
-  return mod.outcomes.filter((_, i) => !S.achieved.has(k(mod.code, i)));
+
+// Toegestane grid-cellen voor een module (zelfde jaar, toegestane periodes)
+function allowedKeys(mod) {
+  if (!mod?.periodes?.length || !mod.periodes[0]?.length) return [];
+  return mod.periodes[0].map(p => gridKey(mod.jaar, p));
 }
-function achievedCount(mod) {
-  return mod.outcomes.filter((_, i) => S.achieved.has(k(mod.code, i))).length;
-}
-function incompleteModules() {
-  return S.modules.filter(m => remaining(m).length > 0);
-}
+
+// EC voor een cel (behaalde LUs tellen niet mee)
 function cellEC(key) {
-  return (S.plan.grid[key]?.codes ?? []).reduce((sum, code) => {
-    const mod = S.modules.find(m => m.code === code);
-    if (!mod) return sum;
-    return sum + remaining(mod).reduce((s, o) => s + (o.studiepunten || 0), 0);
+  return (S.plan.grid[key]?.items ?? []).reduce((sum, item) => {
+    if (S.achieved.has(k(item.code, item.idx))) return sum;
+    const outcome = S.modules.find(m => m.code === item.code)?.outcomes[item.idx];
+    return sum + (outcome?.studiepunten || 0);
   }, 0);
 }
 
-// ============================================================
-// MARKDOWN PARSER (legacy – behouden voor eventuele .md bestanden)
-// ============================================================
-function parseMarkdown(text) {
-  const lines = text.split('\n');
-  const modules = [];
-  let curMod = null, curOut = null, body = [], inPeriodes = false;
-
-  function saveOutcome() {
-    if (!curOut || !curMod) return;
-    const full = body.join('\n');
-    const qm = full.match(/eindkwalificaties?\s+(.+?)\.?\s*$/m);
-    curOut.qualification = qm ? qm[1].replace(/\s+en\s+/g, ', ').trim() : '';
-    const smMatch = body.join('\n').match(/^-\s*(\d+)\s+studiepunten/m);
-    curOut.studiepunten = smMatch ? parseInt(smMatch[1]) : 0;
-    curMod.outcomes.push(curOut);
-    curOut = null; body = [];
-  }
-  function saveModule() {
-    saveOutcome();
-    if (curMod && curMod.outcomes.length > 0) modules.push(curMod);
-    curMod = null;
-    inPeriodes = false;
-  }
-
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (line.startsWith('# ') && !line.match(/^# Leeruitkomsten/i)) {
-      saveModule();
-      const m = line.match(/^# ((\d+)\.\S+)\s*(.*)/);
-      if (m) curMod = { code: m[1], name: m[3].trim(), jaar: parseInt(m[2]), periodes: [], outcomes: [] };
-    } else if (line === '### Periodes' && curMod && !curOut) {
-      inPeriodes = true;
-    } else if (inPeriodes && line.startsWith('- ') && curMod && !curOut) {
-      const nums = line.slice(2).split('+').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
-      if (nums.length) curMod.periodes.push(nums);
-    } else if (line.startsWith('## ') && curMod) {
-      inPeriodes = false;
-      saveOutcome();
-      const name = line.slice(3).trim();
-      if (name) curOut = { name, qualification: '', studiepunten: 0 };
-    } else if (curOut) {
-      if (line.startsWith('BOKS:')) saveOutcome();
-      else body.push(line);
-    } else if (inPeriodes && line && !line.startsWith('-')) {
-      inPeriodes = false;
-    }
-  }
-  saveModule();
-  return modules;
+// Verdeel LUs gelijkmatig (round-robin) over beschikbare periodes
+function distributeItems(modules) {
+  const grid = initGrid();
+  modules.forEach(mod => {
+    const periods = mod.periodes?.[0] ?? [];
+    if (!periods.length || mod.jaar < 1 || mod.jaar > 4) return;
+    mod.outcomes.forEach((_, i) => {
+      const p = periods[i % periods.length];
+      const key = gridKey(mod.jaar, p);
+      if (grid[key]) grid[key].items.push({ code: mod.code, idx: i });
+    });
+  });
+  return grid;
 }
 
 // ============================================================
@@ -126,16 +87,13 @@ function parseMarkdown(text) {
 // ============================================================
 function parseJSON(data) {
   return (data.modules || []).map(mod => {
-    // Matches "1.1 Naam", "1.3-1.4 Naam", "2.3Keuzemodule Naam"
     const m = mod.naam?.match(/^((\d+)\.\S*)\s*(.*)/);
     if (!m) return null;
     const code = m[1];
     const jaar = parseInt(m[2]);
     const name = m[3].trim() || m[1];
-
     // Converteer flat periodes [1,2] → [[1,2]] zodat de gridlogica werkt
     const periodes = mod.periodes?.length ? [mod.periodes] : [];
-
     const outcomes = (mod.leeruitkomsten || []).map(lu => {
       const qm = (lu.omschrijving || '').match(/eindkwalificaties?\s+(.+?)\.?\s*$/m);
       return {
@@ -144,48 +102,28 @@ function parseJSON(data) {
         qualification: qm ? qm[1].replace(/\s+en\s+/g, ', ').trim() : ''
       };
     });
-
     return { code, name, jaar, periodes, outcomes };
   }).filter(Boolean);
 }
 
 // ============================================================
-// SYNC PLAN after achieved changes
-// ============================================================
-function syncPlan() {
-  const incompCodes = incompleteModules().map(m => m.code);
-  // Remove completed modules from grid & unplanned
-  Object.values(S.plan.grid).forEach(cell => {
-    cell.codes = cell.codes.filter(c => incompCodes.includes(c));
-  });
-  S.plan.unplanned = S.plan.unplanned.filter(c => incompCodes.includes(c));
-  // Add newly-incomplete modules to unplanned (if not already placed)
-  const placed = new Set(Object.values(S.plan.grid).flatMap(cell => cell.codes));
-  incompCodes.forEach(c => {
-    if (!placed.has(c) && !S.plan.unplanned.includes(c)) {
-      S.plan.unplanned.push(c);
-    }
-  });
-}
-
-// ============================================================
-// LOCAL STORAGE – opslaan / laden
+// LOCAL STORAGE – opslaan / laden  (formaat v2 = items-gebaseerd)
 // ============================================================
 function getSaveData() {
   return {
-    v: 1,
+    v: 2,
     ts: Date.now(),
     code: S.opleiding?.code,
     displayName: S.opleiding?.displayName,
     achieved: [...S.achieved],
     plan: {
       grid: Object.fromEntries(
-        Object.entries(S.plan.grid).map(([key, val]) => [key, { codes: [...val.codes], comment: val.comment }])
-      ),
-      unplanned: [...S.plan.unplanned]
+        Object.entries(S.plan.grid).map(([key, val]) => [
+          key, { items: val.items.map(i => ({ ...i })), comment: val.comment }
+        ])
+      )
     },
-    student: { ...S.student },
-    step: S.step >= 2 ? S.step : 2
+    student: { ...S.student }
   };
 }
 
@@ -201,18 +139,21 @@ async function loadSavedState() {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return false;
     const saved = JSON.parse(raw);
-    if (saved.v !== 1 || !saved.code) return false;
+    if (saved.v !== 2 || !saved.code) return false;
     const data = await fetch(`./leeruitkomsten/Leeruitkomsten-${encodeURIComponent(saved.code)}.json`).then(r => r.json());
     S.modules = parseJSON(data);
     S.opleiding = { code: saved.code, displayName: saved.displayName };
     S.achieved = new Set(saved.achieved || []);
-    S.plan = {
-      grid: saved.plan?.grid || initGrid(),
-      unplanned: saved.plan?.unplanned || []
-    };
+    // Herstel grid (zorg dat ontbrekende cellen leeg zijn)
+    const restoredGrid = initGrid();
+    if (saved.plan?.grid) {
+      Object.entries(saved.plan.grid).forEach(([key, val]) => {
+        if (restoredGrid[key]) restoredGrid[key] = { items: val.items || [], comment: val.comment || '' };
+      });
+    }
+    S.plan = { grid: restoredGrid };
     S.student = { ...S.student, ...(saved.student || {}) };
-    S.step = saved.step >= 2 ? saved.step : 2;
-    S.expanded = new Set();
+    S.step = 2;
     S.commentOpen = new Set();
     S.lastSaved = null;
     return true;
@@ -231,7 +172,7 @@ function render() {
 }
 
 function renderHeader() {
-  const steps = ['Opleiding kiezen', 'Leeruitkomsten', 'Studieplan'];
+  const steps = ['Opleiding kiezen', 'Studieplan'];
   return `
   <header>
     <div class="header-inner">
@@ -254,19 +195,17 @@ function renderHeader() {
 
 function renderStep() {
   if (S.step === 1) return renderStep1();
-  if (S.step === 2) return renderStep2();
-  return renderStep3();
+  return renderStep2();
 }
 
 // ─── Step 1 ─────────────────────────────────────────────────
 function renderStep1() {
-  // Controleer of er een opgeslagen studiepad is
   let resumeBanner = '';
   try {
     const raw = localStorage.getItem(LS_KEY);
     if (raw) {
       const saved = JSON.parse(raw);
-      if (saved.v === 1 && saved.code) {
+      if (saved.v === 2 && saved.code) {
         const savedDate = saved.ts ? new Date(saved.ts).toLocaleString('nl-NL', {
           day: '2-digit', month: '2-digit', year: 'numeric',
           hour: '2-digit', minute: '2-digit'
@@ -293,183 +232,11 @@ function renderStep1() {
   </div>`;
 }
 
-// ─── Step 2 helpers ─────────────────────────────────────────
-function buildStandardGridData() {
-  const grid = {};
-  for (let y = 1; y <= 4; y++)
-    for (let p = 1; p <= 4; p++)
-      grid[gridKey(y, p)] = [];
-  S.modules.forEach(mod => {
-    if (!mod.jaar || !mod.periodes || mod.periodes.length === 0) return;
-    mod.periodes.forEach(group => group.forEach(p => {
-      const key = gridKey(mod.jaar, p);
-      if (grid[key]) grid[key].push(mod);
-    }));
-  });
-  return grid;
-}
-
-function chipClass(mod) {
-  const ach = achievedCount(mod);
-  if (mod.outcomes.length === 0) return 'chip-todo';
-  if (ach === mod.outcomes.length) return 'chip-done';
-  if (ach > 0) return 'chip-partial';
-  return 'chip-todo';
-}
-
-function renderCurriculumGrid() {
-  const stdGrid = buildStandardGridData();
-  const hasAnyData = Object.values(stdGrid).some(mods => mods.length > 0);
-  if (!hasAnyData) return '';
-
-  const headerCells = [1, 2, 3, 4].map(p =>
-    `<div class="cg-header">Periode ${p}</div>`
-  ).join('');
-
-  const rows = [1, 2, 3, 4].map(y => {
-    const periodCells = [1, 2, 3, 4].map(p => {
-      const mods = stdGrid[gridKey(y, p)] || [];
-      const chips = mods.map(mod =>
-        `<span class="chip ${chipClass(mod)}" title="${esc(mod.name)}">${esc(mod.code)}</span>`
-      ).join('');
-      return `<div class="cg-cell">${chips}</div>`;
-    }).join('');
-    return `
-      <div class="cg-year-label">Jaar ${y}</div>
-      ${periodCells}`;
-  }).join('');
-
-  return `
-  <details class="curriculum-section" open>
-    <summary class="curriculum-summary">Standaard curriculum overzicht</summary>
-    <div class="curriculum-grid-outer">
-      <div class="curriculum-grid">
-        <div class="cg-corner"></div>
-        ${headerCells}
-        ${rows}
-      </div>
-      <div class="curriculum-legend">
-        <span class="chip chip-done">Volledig behaald</span>
-        <span class="chip chip-partial">Gedeeltelijk behaald</span>
-        <span class="chip chip-todo">Nog te behalen</span>
-      </div>
-    </div>
-  </details>`;
-}
-
-// ─── Step 2 ─────────────────────────────────────────────────
+// ─── Step 2 – gecombineerde stap ─────────────────────────────
 function renderStep2() {
   const total = S.modules.reduce((s, m) => s + m.outcomes.length, 0);
   const achCount = S.achieved.size;
   const pct = total ? Math.round(achCount / total * 100) : 0;
-
-  const cards = S.modules.map(mod => {
-    const ach = achievedCount(mod);
-    const tot = mod.outcomes.length;
-    const complete = ach === tot;
-    const exp = S.expanded.has(mod.code);
-    const mpct = tot ? Math.round(ach / tot * 100) : 0;
-
-    const outcomesHtml = exp ? `
-      <div class="module-outcomes">
-        ${mod.outcomes.length === 0
-        ? `<p class="no-outcomes">Geen leeruitkomsten beschikbaar voor deze module.</p>`
-        : mod.outcomes.map((o, i) => {
-          const done = S.achieved.has(k(mod.code, i));
-          return `
-              <label class="outcome-item ${done ? 'achieved' : ''}">
-                <input type="checkbox" data-mod="${esc(mod.code)}" data-idx="${i}" ${done ? 'checked' : ''}>
-                <div class="outcome-content">
-                  <span class="outcome-name">${esc(o.name || '(naamloos)')}</span>
-                  ${o.studiepunten ? `<span class="outcome-ec">${o.studiepunten} EC</span>` : ''}
-                  ${o.qualification ? `<span class="outcome-qual">${esc(o.qualification)}</span>` : ''}
-                </div>
-              </label>`;
-        }).join('')}
-        <div class="module-actions">
-          <button class="btn-link" data-sel-all="${esc(mod.code)}">Alles aanvinken</button>
-          <button class="btn-link" data-desel-all="${esc(mod.code)}">Alles uitvinken</button>
-        </div>
-      </div>` : '';
-
-    return `
-    <div class="module-card ${complete ? 'complete' : ''}">
-      <div class="module-header" data-toggle="${esc(mod.code)}">
-        <div class="module-info">
-          <span class="module-code">${esc(mod.code)}</span>
-          <span class="module-name">${esc(mod.name)}</span>
-        </div>
-        <div class="module-meta">
-          <span class="module-progress-text">${ach}/${tot} behaald</span>
-          <div class="mini-progress" title="${mpct}%">
-            <div class="mini-bar" style="width:${mpct}%"></div>
-          </div>
-          <span class="toggle-icon">${exp ? '▲' : '▼'}</span>
-        </div>
-      </div>
-      ${outcomesHtml}
-    </div>`;
-  }).join('');
-
-  return `
-  <div class="step-content">
-    <div class="step2-header">
-      <div>
-        <h2>Welke leeruitkomsten heb je al behaald?</h2>
-        <p class="subtitle">Vink de behaalde leeruitkomsten aan. De rest komt in je studieplan.</p>
-      </div>
-      <div class="overall-progress">
-        <div class="progress-label">Totaal behaald: ${achCount} / ${total} &nbsp;(${pct}%)</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      </div>
-    </div>
-    ${renderCurriculumGrid()}
-    <div class="step2-toolbar">
-      <button class="btn-link" id="expand-all">Alles uitklappen</button>
-      <button class="btn-link" id="collapse-all">Alles inklappen</button>
-    </div>
-    <div class="modules-list">${cards}</div>
-    <div class="step-nav">
-      <button class="btn btn-secondary" id="back-1">← Terug</button>
-      <button class="btn btn-save" id="btn-save">💾 Opslaan${S.lastSaved ? ` (${S.lastSaved})` : ''}</button>
-      <button class="btn btn-primary" id="go-3">Naar studieplan →</button>
-    </div>
-  </div>`;
-}
-
-// ─── Step 3 ─────────────────────────────────────────────────
-function renderStep3() {
-  syncPlan();
-
-  const planCard = (code, fromId) => {
-    const mod = S.modules.find(m => m.code === code);
-    if (!mod) return '';
-    const rem = remaining(mod);
-    const ec = rem.reduce((s, o) => s + (o.studiepunten || 0), 0);
-    return `
-    <div class="plan-card"
-         draggable="true"
-         data-code="${esc(code)}"
-         data-from="${esc(fromId)}">
-      <div class="plan-card-hdr">
-        <span class="module-code">${esc(mod.code)}</span>
-        <span class="plan-card-name">${esc(mod.name)}</span>
-        ${ec > 0 ? `<span class="plan-card-ec">${ec} EC</span>` : ''}
-      </div>
-      <ul class="remaining-list">
-        ${rem.map(o => `<li>${esc(o.name)}</li>`).join('')}
-      </ul>
-    </div>`;
-  };
-
-  // Unplanned drop zone
-  const unplannedZone = `
-    <div class="drop-zone unplanned-zone" data-target="unplanned">
-      ${S.plan.unplanned.map(c => planCard(c, 'unplanned')).join('')}
-      ${S.plan.unplanned.length === 0
-        ? '<p class="all-planned">Alle modules zijn ingepland 🎉</p>'
-        : '<span class="drop-hint">Sleep hier naartoe</span>'}
-    </div>`;
 
   // 4×4 grid header
   const headerRow = [1, 2, 3, 4].map(p =>
@@ -480,10 +247,33 @@ function renderStep3() {
   const gridRows = [1, 2, 3, 4].map(y => {
     const cells = [1, 2, 3, 4].map(p => {
       const key = gridKey(y, p);
-      const cell = S.plan.grid[key] || { codes: [], comment: '' };
+      const cell = S.plan.grid[key] || { items: [], comment: '' };
       const ec = cellEC(key);
       const hasComment = cell.comment.trim().length > 0;
       const commentIsOpen = S.commentOpen.has(key);
+
+      const luItemsHtml = cell.items.map(item => {
+        const mod = S.modules.find(m => m.code === item.code);
+        if (!mod) return '';
+        const outcome = mod.outcomes[item.idx];
+        if (!outcome) return '';
+        const achieved = S.achieved.has(k(item.code, item.idx));
+        return `
+        <div class="lu-item${achieved ? ' achieved' : ''}"
+             draggable="true"
+             data-code="${esc(item.code)}"
+             data-idx="${item.idx}"
+             data-from="${esc(key)}">
+          <input type="checkbox" class="lu-check"
+                 data-mod="${esc(item.code)}" data-idx="${item.idx}"
+                 ${achieved ? 'checked' : ''}>
+          <div class="lu-info">
+            <span class="lu-badge">${esc(item.code)}</span>
+            <span class="lu-name" title="${esc(outcome.name)}">${esc(outcome.name)}</span>
+          </div>
+          ${outcome.studiepunten ? `<span class="lu-ec">${outcome.studiepunten}</span>` : ''}
+        </div>`;
+      }).join('');
 
       return `
       <div class="pg-cell">
@@ -494,8 +284,8 @@ function renderStep3() {
                   title="${hasComment ? 'Opmerking bewerken' : 'Opmerking toevoegen'}">${hasComment ? '💬' : '+'}</button>
         </div>
         <div class="drop-zone" data-target="${esc(key)}">
-          ${cell.codes.map(c => planCard(c, key)).join('')}
-          <span class="drop-hint">Sleep hier naartoe</span>
+          ${luItemsHtml}
+          ${cell.items.length === 0 ? '<span class="drop-hint">Leeg</span>' : ''}
         </div>
         ${commentIsOpen ? `
         <textarea class="period-comment"
@@ -510,59 +300,56 @@ function renderStep3() {
       ${cells}`;
   }).join('');
 
-  const incomplete = incompleteModules();
-  const warningHtml = incomplete.length === 0
-    ? `<div class="warning">Je hebt alle leeruitkomsten als behaald gemarkeerd. Er is niets om in te plannen.</div>`
-    : '';
-
   return `
   <div class="step-content">
-    <h2>Maak je studieplan</h2>
-    <p class="subtitle">Sleep de modules naar het juiste jaar en periode. Druk op <strong>+</strong> om een opmerking toe te voegen. Druk daarna op <strong>Afdrukken</strong>.</p>
-    ${warningHtml}
-    <div class="student-form">
-      <div class="form-row">
-        <label>Naam student
-          <input type="text" id="f-name" value="${esc(S.student.name)}" placeholder="Volledige naam">
-        </label>
-        <label>Studentnummer
-          <input type="text" id="f-number" value="${esc(S.student.number)}" placeholder="12345678">
-        </label>
+    <div class="step2-header">
+      <div>
+        <h2>Studieplan – ${esc(S.opleiding?.displayName ?? '')}</h2>
+        <p class="subtitle">Vink behaalde leeruitkomsten aan. Sleep een leeruitkomst naar een andere periode (alleen waar de module aangeboden wordt).</p>
       </div>
-      <div class="form-row">
-        <label>Studiecoach
-          <input type="text" id="f-coach" value="${esc(S.student.coach)}" placeholder="Naam coach">
-        </label>
-        <label>Datum
-          <input type="date" id="f-date" value="${dateToInput(S.student.date)}">
-        </label>
+      <div class="overall-progress">
+        <div class="progress-label">Behaald: ${achCount} / ${total} &nbsp;(${pct}%)</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
       </div>
     </div>
 
-    <div class="planning-area">
-      <div class="unplanned-section">
-        <div class="section-title">
-          Te plannen
-          <span class="badge">${S.plan.unplanned.length}</span>
-        </div>
-        ${unplannedZone}
-      </div>
-      <div class="plan-grid-section">
-        <div class="plan-grid-wrapper">
-          <div class="plan-grid">
-            <div class="pg-corner"></div>
-            ${headerRow}
-            ${gridRows}
-          </div>
+    <div class="plan-grid-section">
+      <div class="plan-grid-wrapper">
+        <div class="plan-grid">
+          <div class="pg-corner"></div>
+          ${headerRow}
+          ${gridRows}
         </div>
       </div>
     </div>
+
+    <details class="student-details">
+      <summary class="student-summary">▸ Studentgegevens (voor afdrukken)</summary>
+      <div class="student-form">
+        <div class="form-row">
+          <label>Naam student
+            <input type="text" id="f-name" value="${esc(S.student.name)}" placeholder="Volledige naam">
+          </label>
+          <label>Studentnummer
+            <input type="text" id="f-number" value="${esc(S.student.number)}" placeholder="12345678">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Studiecoach
+            <input type="text" id="f-coach" value="${esc(S.student.coach)}" placeholder="Naam coach">
+          </label>
+          <label>Datum
+            <input type="date" id="f-date" value="${dateToInput(S.student.date)}">
+          </label>
+        </div>
+      </div>
+    </details>
 
     <div class="step-nav">
-      <button class="btn btn-secondary" id="back-2">← Terug</button>
+      <button class="btn btn-secondary" id="back-1">← Terug</button>
       <div class="step-nav-right">
         <button class="btn btn-save" id="btn-save">💾 Opslaan${S.lastSaved ? ` (${S.lastSaved})` : ''}</button>
-        <button class="btn btn-print" id="btn-print">🖨 Afdrukken / Opslaan als PDF</button>
+        <button class="btn btn-print" id="btn-print">🖨 Afdrukken / PDF</button>
       </div>
     </div>
   </div>`;
@@ -570,35 +357,41 @@ function renderStep3() {
 
 // ─── Print view (only shown @media print) ───────────────────
 function renderPrintView() {
-  if (S.step !== 3) return '<div class="print-view"></div>';
+  if (S.step !== 2) return '<div class="print-view"></div>';
 
   const { name, number, coach, date } = S.student;
   const opl = S.opleiding?.displayName ?? '';
 
-  // Build rows from grid (year 1→4, period 1→4)
+  // Hoofdtabel: niet-behaalde LUs per periode
   const allRows = [];
   for (let y = 1; y <= 4; y++) {
     for (let p = 1; p <= 4; p++) {
       const key = gridKey(y, p);
       const cell = S.plan.grid[key];
-      if (!cell || cell.codes.length === 0) continue;
-      const ec = cellEC(key);
-      const rows = cell.codes
-        .map(code => S.modules.find(m => m.code === code))
-        .filter(Boolean)
-        .map(mod => ({ label: `Jaar ${y}, Periode ${p}`, mod, rem: remaining(mod), ec }));
-      rows.forEach((r, i) => { r.groupSize = rows.length; r.firstInGroup = i === 0; });
-      allRows.push(...rows);
+      if (!cell) continue;
+      const pendingItems = cell.items.filter(item => !S.achieved.has(k(item.code, item.idx)));
+      if (pendingItems.length === 0) continue;
+
+      // Bereken EC voor deze cel (alleen niet-behaald)
+      const ec = pendingItems.reduce((sum, item) => {
+        const outcome = S.modules.find(m => m.code === item.code)?.outcomes[item.idx];
+        return sum + (outcome?.studiepunten || 0);
+      }, 0);
+
+      pendingItems.forEach((item, i) => {
+        const mod = S.modules.find(m => m.code === item.code);
+        const outcome = mod?.outcomes[item.idx];
+        if (!mod || !outcome) return;
+        allRows.push({
+          label: `Jaar ${y}, Periode ${p}`,
+          groupSize: pendingItems.length,
+          firstInGroup: i === 0,
+          mod,
+          outcome,
+          ec
+        });
+      });
     }
-  }
-  // Unplanned at the end
-  if (S.plan.unplanned.length) {
-    const rows = S.plan.unplanned
-      .map(code => S.modules.find(m => m.code === code))
-      .filter(Boolean)
-      .map(mod => ({ label: 'Nog in te plannen', mod, rem: remaining(mod), ec: 0 }));
-    rows.forEach((r, i) => { r.groupSize = rows.length; r.firstInGroup = i === 0; });
-    allRows.push(...rows);
   }
 
   const rowHtml = allRows.map(r => {
@@ -612,12 +405,12 @@ function renderPrintView() {
     <tr>
       ${periodCell}
       <td><strong>${esc(r.mod.code)}</strong> ${esc(r.mod.name)}</td>
-      <td><ul>${r.rem.map(o => `<li>${esc(o.name)}${o.studiepunten ? ` <em>(${o.studiepunten} EC)</em>` : ''}</li>`).join('')}</ul></td>
+      <td>${esc(r.outcome.name)}${r.outcome.studiepunten ? ` <em>(${r.outcome.studiepunten} EC)</em>` : ''}</td>
       ${ecCell}
     </tr>`;
   }).join('');
 
-  // Comments section (only non-empty cells)
+  // Opmerkingen per periode
   const comments = [];
   for (let y = 1; y <= 4; y++) {
     for (let p = 1; p <= 4; p++) {
@@ -633,6 +426,41 @@ function renderPrintView() {
     <ul class="pv-comments">
       ${comments.map(c => `<li><strong>${esc(c.label)}:</strong> ${esc(c.text)}</li>`).join('')}
     </ul>` : '';
+
+  // Sectie behaalde leeruitkomsten (onderaan)
+  let achievedHtml = '';
+  if (S.achieved.size > 0) {
+    const achievedRows = [];
+    S.modules.forEach(mod => {
+      mod.outcomes.forEach((outcome, i) => {
+        if (S.achieved.has(k(mod.code, i))) {
+          achievedRows.push({ mod, outcome, idx: i });
+        }
+      });
+    });
+    // Sorteer op module.code
+    achievedRows.sort((a, b) => a.mod.code.localeCompare(b.mod.code, undefined, { numeric: true }));
+
+    achievedHtml = `
+    <div class="pv-section-title">Reeds behaalde leeruitkomsten</div>
+    <table class="pv-achieved-table">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Leeruitkomst</th>
+          <th style="width:8%">EC</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${achievedRows.map(r => `
+        <tr>
+          <td><strong>${esc(r.mod.code)}</strong> ${esc(r.mod.name)}</td>
+          <td>${esc(r.outcome.name)}</td>
+          <td>${r.outcome.studiepunten || ''}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  }
 
   return `
   <div class="print-view" id="print-view">
@@ -658,16 +486,18 @@ function renderPrintView() {
         <tr>
           <th style="width:20%">Jaar / Periode</th>
           <th style="width:28%">Module</th>
-          <th>Te behalen leeruitkomsten</th>
+          <th>Te behalen leeruitkomst</th>
           <th style="width:8%">EC</th>
         </tr>
       </thead>
       <tbody>
-        ${rowHtml || '<tr class="pv-no-rows"><td colspan="4">Geen modules ingepland</td></tr>'}
+        ${rowHtml || '<tr class="pv-no-rows"><td colspan="4">Geen leeruitkomsten ingepland</td></tr>'}
       </tbody>
     </table>
 
     ${commentsHtml}
+
+    ${achievedHtml}
 
     <div class="pv-sigs">
       <div class="pv-sig-block">
@@ -688,7 +518,6 @@ function renderPrintView() {
 // DATE HELPERS
 // ============================================================
 function dateToInput(nl) {
-  // "9-3-2026" → "2026-03-09"
   const m = nl && nl.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
   if (!m) return '';
   return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
@@ -702,11 +531,10 @@ function inputToNL(iso) {
 // BIND EVENT LISTENERS (called after each render)
 // ============================================================
 function bindAll() {
-  // ── Step 1: load opleiding grid async
+  // ── Step 1 ──────────────────────────────────────────────
   const grid = document.getElementById('opleiding-grid');
   if (grid) loadOpleidingen();
 
-  // ── Step 1: resume banner knoppen
   on('btn-resume', async () => {
     const ok = await loadSavedState();
     if (ok) render();
@@ -717,52 +545,15 @@ function bindAll() {
     render();
   });
 
-  // ── Step 2 ──────────────────────────────────────────────
-  document.querySelectorAll('[data-toggle]').forEach(el =>
-    el.addEventListener('click', () => {
-      const code = el.dataset.toggle;
-      S.expanded.has(code) ? S.expanded.delete(code) : S.expanded.add(code);
-      render();
-    }));
-
-  document.querySelectorAll('input[data-mod]').forEach(cb =>
+  // ── Step 2: checkboxes ──────────────────────────────────
+  document.querySelectorAll('input.lu-check[data-mod]').forEach(cb =>
     cb.addEventListener('change', e => {
       const key_ = k(e.target.dataset.mod, e.target.dataset.idx);
       e.target.checked ? S.achieved.add(key_) : S.achieved.delete(key_);
       render();
     }));
 
-  document.querySelectorAll('[data-sel-all]').forEach(btn =>
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const mod = S.modules.find(m => m.code === btn.dataset.selAll);
-      if (mod) mod.outcomes.forEach((_, i) => S.achieved.add(k(mod.code, i)));
-      render();
-    }));
-
-  document.querySelectorAll('[data-desel-all]').forEach(btn =>
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const mod = S.modules.find(m => m.code === btn.dataset.deselAll);
-      if (mod) mod.outcomes.forEach((_, i) => S.achieved.delete(k(mod.code, i)));
-      render();
-    }));
-
-  on('expand-all', () => {
-    S.modules.forEach(m => S.expanded.add(m.code));
-    render();
-  });
-  on('collapse-all', () => { S.expanded.clear(); render(); });
-
-  // ── Navigation ──────────────────────────────────────────
-  on('back-1', () => { S.step = 1; render(); });
-  on('go-3', () => { S.step = 3; render(); });
-  on('back-2', () => { S.step = 2; render(); });
-
-  // ── Opslaan (stap 2 & 3) ────────────────────────────────
-  on('btn-save', saveState);
-
-  // ── Step 3: comment toggle ───────────────────────────────
+  // ── Step 2: comment toggle ───────────────────────────────
   document.querySelectorAll('.comment-toggle[data-comment-key]').forEach(btn =>
     btn.addEventListener('click', () => {
       const key = btn.dataset.commentKey;
@@ -770,12 +561,18 @@ function bindAll() {
       render();
     }));
 
-  // Step 3: comment textarea – live save without re-render
+  // Step 2: comment textarea – live save without re-render
   document.querySelectorAll('.period-comment[data-grid-key]').forEach(ta =>
     ta.addEventListener('input', () => {
       const key = ta.dataset.gridKey;
       if (S.plan.grid[key]) S.plan.grid[key].comment = ta.value;
     }));
+
+  // ── Navigation ──────────────────────────────────────────
+  on('back-1', () => { S.step = 1; render(); });
+
+  // ── Opslaan ─────────────────────────────────────────────
+  on('btn-save', saveState);
 
   // ── Student form – live save without re-render ───────────
   bindInput('f-name', v => S.student.name = v);
@@ -783,16 +580,23 @@ function bindAll() {
   bindInput('f-coach', v => S.student.coach = v);
   bindInput('f-date', v => { S.student.date = inputToNL(v); });
 
-  // Print
+  // ── Print ────────────────────────────────────────────────
   on('btn-print', () => {
-    document.getElementById('print-view').outerHTML = renderPrintView();
+    const pv = document.getElementById('print-view');
+    if (pv) pv.outerHTML = renderPrintView();
     window.print();
   });
 
-  // ── Drag & Drop ─────────────────────────────────────────
-  document.querySelectorAll('.plan-card').forEach(card => {
+  // ── Drag & Drop (LU-niveau) ──────────────────────────────
+  document.querySelectorAll('.lu-item').forEach(card => {
     card.addEventListener('dragstart', e => {
-      S.drag = { code: card.dataset.code, from: card.dataset.from };
+      // Geen drag als de gebruiker op de checkbox klikt
+      if (e.target.type === 'checkbox') { e.preventDefault(); return; }
+      S.drag = {
+        code: card.dataset.code,
+        idx: parseInt(card.dataset.idx, 10),
+        from: card.dataset.from
+      };
       e.dataTransfer.effectAllowed = 'move';
       setTimeout(() => card.classList.add('dragging'), 0);
     });
@@ -804,9 +608,17 @@ function bindAll() {
 
   document.querySelectorAll('.drop-zone').forEach(zone => {
     zone.addEventListener('dragover', e => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      zone.classList.add('drag-over');
+      const { code, from } = S.drag;
+      if (!code) return;
+      const to = zone.dataset.target;
+      if (to === from) return; // zelfde cel, niet verplaatsen
+      const mod = S.modules.find(m => m.code === code);
+      if (mod && allowedKeys(mod).includes(to)) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        zone.classList.add('drag-over');
+      }
+      // Geen preventDefault → browser toont no-drop cursor voor niet-toegestane cellen
     });
     zone.addEventListener('dragleave', e => {
       if (!zone.contains(e.relatedTarget)) zone.classList.remove('drag-over');
@@ -814,27 +626,22 @@ function bindAll() {
     zone.addEventListener('drop', e => {
       e.preventDefault();
       zone.classList.remove('drag-over');
-      const { code, from } = S.drag;
+      const { code, idx, from } = S.drag;
       const to = zone.dataset.target;
       if (!code || from === to) return;
 
-      // Remove from source
-      if (from === 'unplanned') {
-        S.plan.unplanned = S.plan.unplanned.filter(c => c !== code);
-      } else {
-        const cell = S.plan.grid[from];
-        if (cell) cell.codes = cell.codes.filter(c => c !== code);
+      // Verwijder uit bronce
+      const sourceCell = S.plan.grid[from];
+      if (sourceCell) {
+        sourceCell.items = sourceCell.items.filter(item => !(item.code === code && item.idx === idx));
+      }
+      // Voeg toe aan doel
+      const targetCell = S.plan.grid[to];
+      if (targetCell && !targetCell.items.some(item => item.code === code && item.idx === idx)) {
+        targetCell.items.push({ code, idx });
       }
 
-      // Add to target
-      if (to === 'unplanned') {
-        if (!S.plan.unplanned.includes(code)) S.plan.unplanned.push(code);
-      } else {
-        const cell = S.plan.grid[to];
-        if (cell && !cell.codes.includes(code)) cell.codes.push(code);
-      }
-
-      S.drag = { code: null, from: null };
+      S.drag = { code: null, idx: null, from: null };
       render();
     });
   });
@@ -887,21 +694,18 @@ async function selectOpleiding(code, displayName) {
     const data = await fetch(`./leeruitkomsten/Leeruitkomsten-${encodeURIComponent(code)}.json`).then(r => r.json());
     const modules = parseJSON(data);
 
-    S.opleiding = { code, displayName };
-    S.modules = modules;
-    S.achieved.clear();
-    S.expanded.clear();
-    S.commentOpen.clear();
-    S.plan = {
-      grid: initGrid(),
-      unplanned: modules.map(m => m.code),
-    };
-    S.step = 2;
-
     if (modules.length === 0) {
       alert(`De opleiding "${displayName}" heeft nog geen leeruitkomsten in het JSON-bestand.`);
       return;
     }
+
+    S.opleiding = { code, displayName };
+    S.modules = modules;
+    S.achieved = new Set();
+    S.commentOpen = new Set();
+    S.plan = { grid: distributeItems(modules) };
+    S.lastSaved = null;
+    S.step = 2;
     render();
   } catch (e) {
     alert('Fout bij laden van leeruitkomsten: ' + e.message);
