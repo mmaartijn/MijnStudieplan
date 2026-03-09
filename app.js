@@ -152,7 +152,8 @@ function parseJSON(data) {
       return {
         name: lu.titel || '',
         studiepunten: lu.studiepunten || 0,
-        qualification: qm ? qm[1].replace(/\s+en\s+/g, ', ').trim() : ''
+        qualification: qm ? qm[1].replace(/\s+en\s+/g, ', ').trim() : '',
+        description: lu.omschrijving || ''
       };
     });
     return { code, name, jaar, periodes, outcomes };
@@ -229,7 +230,7 @@ async function loadSavedState() {
 // ============================================================
 function render() {
   const app = document.getElementById('app');
-  app.innerHTML = renderHeader() + `<main>${renderStep()}</main>` + renderPrintModal() + renderPrintView();
+  app.innerHTML = renderHeader() + `<main>${renderStep()}</main>` + renderPrintModal() + renderInfoModalContainer() + renderPrintView();
   bindAll();
 }
 
@@ -250,18 +251,6 @@ function renderHeader() {
     <div class="header-inner">
       <div class="header-brand-steps" style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
         <h1>Mijn Studiepad</h1>
-        <nav class="steps" aria-label="Stappen">
-          ${steps.map((n, i) => {
-    const num = i + 1;
-    const cls = num === S.step ? 'active' : num < S.step ? 'done' : '';
-    const label = num < S.step ? '✓' : num;
-    return (i > 0 ? '<div class="step-conn" aria-hidden="true"></div>' : '') +
-      `<div class="step ${cls}" aria-current="${num === S.step ? 'step' : 'false'}">
-              <span class="step-num">${label}</span>
-              <span class="step-name">${n}</span>
-            </div>`;
-  }).join('')}
-        </nav>
       </div>
       ${actionsHtml}
     </div>
@@ -363,11 +352,8 @@ function renderStep2() {
              data-code="${esc(item.code)}"
              data-idx="${item.idx}"
              data-from="${esc(key)}">
-          <input type="checkbox" class="lu-check"
-                 data-mod="${esc(item.code)}" data-idx="${item.idx}"
-                 ${achieved ? 'checked' : ''}>
           <div class="lu-info">
-            <span class="lu-badge">${esc(item.code)}</span>
+            <span class="lu-badge">${esc(item.code)} <span style="font-weight:normal; opacity:0.85;">${esc(mod.name)}</span></span>
             <span class="lu-name" title="${esc(outcome.name)}">${esc(outcome.name)}</span>
           </div>
           ${outcome.studiepunten ? `<span class="lu-ec">${outcome.studiepunten}</span>` : ''}
@@ -461,6 +447,14 @@ function renderPrintModal() {
         <button class="btn btn-print" id="btn-confirm-print">Bevestig & Print</button>
       </div>
     </div>
+  </dialog>`;
+}
+
+// ─── Info Modal Container ──────────────────────────────────────
+function renderInfoModalContainer() {
+  return `
+  <dialog id="info-modal" class="print-modal info-modal-styling">
+    <div class="print-modal-inner info-modal-inner" id="info-modal-content" style="max-height: 85vh; overflow-y: auto;"></div>
   </dialog>`;
 }
 
@@ -669,13 +663,7 @@ function bindAll() {
     });
   }
 
-  // ── Step 2: checkboxes ──────────────────────────────────
-  document.querySelectorAll('input.lu-check[data-mod]').forEach(cb =>
-    cb.addEventListener('change', e => {
-      const key_ = k(e.target.dataset.mod, e.target.dataset.idx);
-      e.target.checked ? S.achieved.add(key_) : S.achieved.delete(key_);
-      render();
-    }));
+
 
   // ── Step 2: comment toggle ───────────────────────────────
   document.querySelectorAll('.comment-toggle[data-comment-key]').forEach(btn =>
@@ -726,11 +714,13 @@ function bindAll() {
     }, 150);
   });
 
-  // ── Drag & Drop (LU-niveau) ──────────────────────────────
+  // ── Drag & Drop & Click (LU-niveau) ──────────────────────────────
   document.querySelectorAll('.lu-item').forEach(card => {
+    card.addEventListener('click', e => {
+      showInfoModal(card.dataset.code, parseInt(card.dataset.idx, 10));
+    });
+
     card.addEventListener('dragstart', e => {
-      // Geen drag als de gebruiker op de checkbox klikt
-      if (e.target.type === 'checkbox') { e.preventDefault(); return; }
       S.drag = {
         code: card.dataset.code,
         idx: parseInt(card.dataset.idx, 10),
@@ -856,6 +846,103 @@ async function selectOpleiding(code, displayName) {
   } catch (e) {
     alert('Fout bij laden van leeruitkomsten: ' + e.message);
   }
+}
+
+// ============================================================
+// DYNAMIC MODAL LOGIC
+// ============================================================
+function showInfoModal(modCode, highlightIdx) {
+  const mod = S.modules.find(m => m.code === modCode);
+  if (!mod) return;
+  const dialog = document.getElementById('info-modal');
+  const container = document.getElementById('info-modal-content');
+  if (!dialog || !container) return;
+
+  const outcomesHtml = mod.outcomes.map((o, i) => {
+    const isHighlighted = i === highlightIdx;
+    const achieved = S.achieved.has(k(modCode, i));
+    return `
+      <div class="info-outcome ${isHighlighted ? 'highlighted' : ''}">
+        <div class="info-outcome-header" style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 8px;">
+          <div style="display:flex; align-items:center; gap: 10px;">
+            <input type="checkbox" class="lu-check-modal" style="width:18px; height:18px; accent-color:var(--success); cursor:pointer;"
+                   data-mod="${esc(modCode)}" data-idx="${i}" ${achieved ? 'checked' : ''}>
+            <h4 style="color: var(--primary); font-size: 1.05rem; margin: 0;">${esc(o.name)}</h4>
+          </div>
+          <span class="ec-badge" style="font-size: 0.8rem; padding: 2px 8px;">${o.studiepunten} EC</span>
+        </div>
+        <div class="info-outcome-desc" style="font-size: 0.9rem; line-height: 1.6; color: var(--text);">
+          ${esc(o.description || 'Geen uitgebreide omschrijving beschikbaar.').replace(/\n/g, '<br>')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="info-modal-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px;">
+      <h2 style="font-size: 1.3rem; margin: 0; display:flex; gap:10px; align-items:center;">
+         <span class="lu-badge" style="font-size:1rem; padding: 3px 8px;">${esc(mod.code)}</span>
+         ${esc(mod.name)}
+      </h2>
+      <button class="btn-icon" id="btn-close-info" style="font-size: 1.5rem; width:32px; height:32px;">&times;</button>
+    </div>
+    <div class="info-modal-body" style="display:flex; flex-direction:column; gap: 16px;">
+      ${outcomesHtml}
+    </div>
+    <div class="modal-actions" style="margin-top:24px; display:flex; justify-content:flex-end;">
+      <button class="btn btn-secondary" id="btn-close-info-bottom">Sluiten</button>
+    </div>
+  `;
+
+  document.getElementById('btn-close-info').addEventListener('click', () => dialog.close());
+  document.getElementById('btn-close-info-bottom').addEventListener('click', () => dialog.close());
+
+  dialog.showModal();
+
+  // Custom Checkbox binding in de modal om te zorgen dat hij niet sluit op rendering
+  container.querySelectorAll('input.lu-check-modal').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const code = e.target.dataset.mod;
+      const idx = e.target.dataset.idx;
+      const key_ = k(code, idx);
+      e.target.checked ? S.achieved.add(key_) : S.achieved.delete(key_);
+
+      // Update local storage in de achtergrond
+      if (S.opleiding) {
+        localStorage.setItem(LS_KEY, JSON.stringify(getSaveData()));
+      }
+
+      // Update UI in de grid card on-the-fly
+      const card = document.querySelector(`.lu-item[data-code="${esc(code)}"][data-idx="${idx}"]`);
+      if (card) {
+        if (e.target.checked) card.classList.add('achieved');
+        else card.classList.remove('achieved');
+      }
+
+      // Update de "Behaald ... %" header progressie direct
+      const total = S.modules.reduce((s, m) => s + m.outcomes.reduce((totalEC, o) => totalEC + (o.studiepunten || 0), 0), 0);
+      const achCount = Array.from(S.achieved).reduce((sum, key) => {
+        const [modCode, idxStr] = key.split('|');
+        const mObj = S.modules.find(m => m.code === modCode);
+        const outcome = mObj?.outcomes[parseInt(idxStr, 10)];
+        return sum + (outcome?.studiepunten || 0);
+      }, 0);
+      const pct = total ? Math.round(achCount / total * 100) : 0;
+
+      const lbl = document.querySelector('.progress-label');
+      if (lbl) lbl.innerHTML = `Behaald: ${achCount} / ${total} &nbsp;(${pct}%)`;
+      const fill = document.querySelector('.progress-fill');
+      if (fill) fill.style.width = `${pct}%`;
+    });
+  });
+
+  // Scroll de highlighted item in view als die er is
+  setTimeout(() => {
+    const hl = container.querySelector('.highlighted');
+    if (hl) {
+      hl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, 10);
 }
 
 // ============================================================
