@@ -28,6 +28,8 @@ const LS_KEY = 'mijn-studiepad-v1';
 const S = {
   step: 1,
   opleiding: null,      // { code, displayName }
+  studiepaden: {},      // object mapping padnaam to array
+  selectedPad: null,    // string name of selected pad
   modules: [],          // [{ code, name, jaar, periodes: [[...]], outcomes:[{name, studiepunten, qualification}] }]
   achieved: new Set(),  // "moduleCode|outcomeIndex"
   plan: {
@@ -54,8 +56,22 @@ function esc(s) {
 
 // Toegestane grid-cellen voor een module (zelfde jaar, toegestane periodes)
 function allowedKeys(mod) {
-  if (!mod?.periodes?.length || !mod.periodes[0]?.length) return [];
-  return mod.periodes[0].map(p => gridKey(mod.jaar, p));
+  const keys = new Set();
+  if (mod?.periodes?.length && mod.periodes[0]?.length && mod.jaar >= 1 && mod.jaar <= 4) {
+    mod.periodes[0].forEach(p => keys.add(gridKey(mod.jaar, p)));
+  }
+  if (S.selectedPad && S.studiepaden && S.studiepaden[S.selectedPad]) {
+    const padArray = S.studiepaden[S.selectedPad];
+    padArray.forEach((padStr, idx) => {
+      const codes = padStr.split(',').map(s => s.trim());
+      if (codes.includes(mod.code)) {
+        const y = Math.floor(idx / 4) + 1;
+        const p = (idx % 4) + 1;
+        keys.add(gridKey(y, p));
+      }
+    });
+  }
+  return Array.from(keys);
 }
 
 // EC voor een cel (behaalde LUs tellen niet mee)
@@ -82,16 +98,53 @@ function distributeItems(modules) {
   return grid;
 }
 
+// Verdeel LUs gelijkmatig over aanbevolen periodes van een specifiek studiepad
+function distributeItemsByStudiepad(modules, padArray) {
+  if (!padArray || padArray.length === 0) return distributeItems(modules);
+
+  const grid = initGrid();
+  modules.forEach(mod => {
+    // Vind grid keys waar deze module in vermeld staat volgens het pad
+    const modKeys = [];
+    padArray.forEach((padStr, idx) => {
+      const codes = padStr.split(',').map(s => s.trim());
+      if (codes.includes(mod.code)) {
+        const y = Math.floor(idx / 4) + 1;
+        const p = (idx % 4) + 1;
+        modKeys.push(gridKey(y, p));
+      }
+    });
+
+    // Fallback als module nergens in dit studiepad is gedefinieerd
+    if (modKeys.length === 0) {
+      const defaultDist = distributeItems([mod]);
+      Object.keys(defaultDist).forEach(key => {
+        if (defaultDist[key].items.length > 0) {
+          grid[key].items.push(...defaultDist[key].items);
+        }
+      });
+      return;
+    }
+
+    // Verdeel LUs round-robin over de gevonden periodes
+    mod.outcomes.forEach((_, i) => {
+      const key = modKeys[i % modKeys.length];
+      if (grid[key]) grid[key].items.push({ code: mod.code, idx: i });
+    });
+  });
+  return grid;
+}
+
 // ============================================================
 // JSON PARSER (primaire parser voor .json leeruitkomsten)
 // ============================================================
 function parseJSON(data) {
   return (data.modules || []).map(mod => {
-    const m = mod.naam?.match(/^((\d+)\.\S*)\s*(.*)/);
-    if (!m) return null;
-    const code = m[1];
-    const jaar = parseInt(m[2]);
-    const name = m[3].trim() || m[1];
+    const code = mod.code || '';
+    const m = code.match(/^(\d+)/);
+    const jaar = m ? parseInt(m[1]) : 0;
+    const name = mod.naam || code;
+
     // Converteer flat periodes [1,2] → [[1,2]] zodat de gridlogica werkt
     const periodes = mod.periodes?.length ? [mod.periodes] : [];
     const outcomes = (mod.leeruitkomsten || []).map(lu => {
@@ -103,7 +156,13 @@ function parseJSON(data) {
       };
     });
     return { code, name, jaar, periodes, outcomes };
-  }).filter(Boolean);
+  }).filter(m => m.code);
+}
+
+// HELPER: Lookup voor studiepad strings (bijv. "1.1, 1.2" of "1.3-1.4")
+function getModulesByStudiepad(padString) {
+  const codes = padString.split(',').map(s => s.trim());
+  return codes.map(c => S.modules.find(m => m.code === c)).filter(Boolean);
 }
 
 // ============================================================
@@ -115,6 +174,7 @@ function getSaveData() {
     ts: Date.now(),
     code: S.opleiding?.code,
     displayName: S.opleiding?.displayName,
+    selectedPad: S.selectedPad,
     achieved: [...S.achieved],
     plan: {
       grid: Object.fromEntries(
@@ -143,6 +203,8 @@ async function loadSavedState() {
     const data = await fetch(`./leeruitkomsten/Leeruitkomsten-${encodeURIComponent(saved.code)}.json`).then(r => r.json());
     S.modules = parseJSON(data);
     S.opleiding = { code: saved.code, displayName: saved.displayName };
+    S.studiepaden = data.studiepaden || {};
+    S.selectedPad = saved.selectedPad || null;
     S.achieved = new Set(saved.achieved || []);
     // Herstel grid (zorg dat ontbrekende cellen leeg zijn)
     const restoredGrid = initGrid();
@@ -234,6 +296,16 @@ function renderStep1() {
 
 // ─── Step 2 – gecombineerde stap ─────────────────────────────
 function renderStep2() {
+  const padKeys = Object.keys(S.studiepaden || {});
+  const padSelectHtml = padKeys.length > 0 ? `
+    <div class="pad-selector" style="margin-bottom: 20px;">
+      <label for="pad-select"><strong>Studiepad:</strong></label>
+      <select id="pad-select" class="form-control" style="max-width:300px; display:inline-block; margin-left: 10px;">
+        ${padKeys.map(k => `<option value="${esc(k)}"${k === S.selectedPad ? ' selected' : ''}>${esc(k)}</option>`).join('')}
+      </select>
+    </div>
+  ` : '';
+
   const total = S.modules.reduce((s, m) => s + m.outcomes.length, 0);
   const achCount = S.achieved.size;
   const pct = total ? Math.round(achCount / total * 100) : 0;
@@ -312,6 +384,8 @@ function renderStep2() {
         <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
       </div>
     </div>
+    
+    ${padSelectHtml}
 
     <div class="plan-grid-section">
       <div class="plan-grid-wrapper">
@@ -545,6 +619,21 @@ function bindAll() {
     render();
   });
 
+  // ── Step 2: pad select ──────────────────────────────────
+  const padSelect = document.getElementById('pad-select');
+  if (padSelect) {
+    padSelect.addEventListener('change', e => {
+      const newPad = e.target.value;
+      if (confirm('Het wisselen van studiepad overschrijft je huidige planning (behaalde vinkjes blijven wel bewaard). Wil je doorgaan?')) {
+        S.selectedPad = newPad;
+        S.plan = { grid: distributeItemsByStudiepad(S.modules, S.studiepaden[newPad]) };
+        render();
+      } else {
+        e.target.value = S.selectedPad; // reset
+      }
+    });
+  }
+
   // ── Step 2: checkboxes ──────────────────────────────────
   document.querySelectorAll('input.lu-check[data-mod]').forEach(cb =>
     cb.addEventListener('change', e => {
@@ -700,10 +789,17 @@ async function selectOpleiding(code, displayName) {
     }
 
     S.opleiding = { code, displayName };
+    S.studiepaden = data.studiepaden || {};
+    const padKeys = Object.keys(S.studiepaden);
+    S.selectedPad = padKeys.length > 0 ? padKeys[0] : null;
+
     S.modules = modules;
     S.achieved = new Set();
     S.commentOpen = new Set();
-    S.plan = { grid: distributeItems(modules) };
+
+    const padArray = S.selectedPad ? S.studiepaden[S.selectedPad] : [];
+    S.plan = { grid: distributeItemsByStudiepad(modules, padArray) };
+
     S.lastSaved = null;
     S.step = 2;
     render();

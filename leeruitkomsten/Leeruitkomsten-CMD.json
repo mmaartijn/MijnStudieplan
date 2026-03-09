@@ -21,7 +21,8 @@
     },
     "modules": [
         {
-            "naam": "1.1 Remake",
+            "code": "1.1",
+            "naam": "Remake",
             "periodes": [
                 1
             ],
@@ -44,7 +45,8 @@
             ]
         },
         {
-            "naam": "1.2 Motiveer",
+            "code": "1.2",
+            "naam": "Motiveer",
             "periodes": [
                 2
             ],
@@ -67,7 +69,8 @@
             ]
         },
         {
-            "naam": "1.3 Prikkel",
+            "code": "1.3",
+            "naam": "Prikkel",
             "periodes": [
                 3
             ],
@@ -90,7 +93,8 @@
             ]
         },
         {
-            "naam": "1.4 Verbind",
+            "code": "1.4",
+            "naam": "Verbind",
             "periodes": [
                 4
             ],
@@ -108,7 +112,8 @@
             ]
         },
         {
-            "naam": "2.1 Experimenteer",
+            "code": "2.1",
+            "naam": "Experimenteer",
             "periodes": [
                 1
             ],
@@ -121,7 +126,8 @@
             ]
         },
         {
-            "naam": "2.2 Verrijk",
+            "code": "2.2",
+            "naam": "Verrijk",
             "periodes": [
                 2
             ],
@@ -144,7 +150,8 @@
             ]
         },
         {
-            "naam": "2.4 Overtuig",
+            "code": "2.4",
+            "naam": "Overtuig",
             "periodes": [
                 4
             ],
@@ -167,7 +174,8 @@
             ]
         },
         {
-            "naam": "3.1-3.2 Stage",
+            "code": "3.1-3.2",
+            "naam": "Stage",
             "periodes": [
                 1,
                 2,
@@ -176,14 +184,15 @@
             ],
             "leeruitkomsten": [
                 {
-                    "titel": "Afstuderen",
+                    "titel": "Stage",
                     "studiepunten": 30,
                     "omschrijving": ""
                 }
             ]
         },
         {
-            "naam": "3.3 Verstoor",
+            "code": "3.3",
+            "naam": "Verstoor",
             "periodes": [
                 3
             ],
@@ -196,7 +205,8 @@
             ]
         },
         {
-            "naam": "4.3-4.4 Afstuderen",
+            "code": "4.3-4.4",
+            "naam": "Afstuderen",
             "periodes": [
                 1,
                 2,
@@ -212,7 +222,8 @@
             ]
         },
         {
-            "naam": "2.3 Keuzemodule NLQF5",
+            "code": "2.3",
+            "naam": "Keuzemodule NLQF5",
             "periodes": [
                 1,
                 2,
@@ -228,7 +239,8 @@
             ]
         },
         {
-            "naam": "3.4 Keuzemodule NLQF6",
+            "code": "3.4",
+            "naam": "Keuzemodule NLQF6",
             "periodes": [
                 1,
                 2,
@@ -244,7 +256,8 @@
             ]
         },
         {
-            "naam": "3.1-3.2 Minor",
+            "code": "3.1-3.2",
+            "naam": "Minor",
             "periodes": [
                 1,
                 2,
