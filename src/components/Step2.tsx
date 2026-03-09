@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { CurriculumData, PlanGrid } from '@/lib/types';
 import InfoModal from './InfoModal';
-
+import { distributeItemsByStudiepad } from '@/lib/utils';
 interface Step2Props {
     curriculum: CurriculumData;
     selectedPad: string;
@@ -20,6 +20,7 @@ export default function Step2({
 
     const [draggedItem, setDraggedItem] = useState<{ code: string, idx: number, fromKey: string } | null>(null);
     const [infoModalItem, setInfoModalItem] = useState<{ code: string, activeIdx?: number } | null>(null);
+    const [pendingPad, setPendingPad] = useState<string | null>(null);
 
     const pads = Object.keys(curriculum.studiepaden);
 
@@ -34,14 +35,21 @@ export default function Step2({
     const pct = totalEC ? Math.round((achievedEC / totalEC) * 100) : 0;
 
     const handlePadChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        // Basic confirmation dialog via native confirm since we are refactoring logic quickly.
-        // In page.tsx we already did this natively, but here we can just do native or use our state.
-        if (window.confirm('Veranderen van studiepad overschrijft je huidige planning (behaalde vinkjes blijven wel bewaard). Wil je doorgaan?')) {
-            setSelectedPad(e.target.value);
-            // We should ideally trigger `distributeItems` again correctly.
-            // We will handle passing distribute to onPadChange later if needed, but for now just pass to parent or use an effect.
-            // Since distributeItems is in page.tsx, we can lift this up or just let parent handle effect.
+        const newPad = e.target.value;
+        const initialGrid = distributeItemsByStudiepad(curriculum.modules, curriculum.studiepaden[selectedPad] || []);
+        const isDirty = JSON.stringify(planGrid) !== JSON.stringify(initialGrid);
+
+        if (isDirty) {
+            setPendingPad(newPad);
+        } else {
+            applyPadChange(newPad);
         }
+    };
+
+    const applyPadChange = (pad: string) => {
+        setSelectedPad(pad);
+        setPlanGrid(distributeItemsByStudiepad(curriculum.modules, curriculum.studiepaden[pad] || []));
+        setPendingPad(null);
     };
 
     const onDragStart = (e: React.DragEvent, code: string, idx: number, fromKey: string) => {
@@ -225,6 +233,33 @@ export default function Step2({
                     toggleAchieved={toggleAchieved}
                     onClose={() => setInfoModalItem(null)}
                 />
+            )}
+
+            {pendingPad && (
+                <div className="fixed inset-0 bg-black/50 z-[100] flex justify-center items-center p-4">
+                    <div className="bg-card rounded-radius shadow-xl w-full max-w-[450px] p-6 text-center animate-fade-in" onClick={e => e.stopPropagation()}>
+                        <h3 className="text-xl font-bold mb-3 text-text-main">Studiepad wijzigen?</h3>
+                        <p className="text-[0.95rem] text-muted mb-6">
+                            Je hebt wijzigingen aangebracht in de planning. Als je overschakelt naar een ander studiepad, worden deze overschreven door de standaardindeling.
+                            <br /><br />
+                            Weet je zeker dat je wilt wijzigen?
+                        </p>
+                        <div className="flex justify-center gap-3">
+                            <button
+                                onClick={() => setPendingPad(null)}
+                                className="px-5 py-2 text-[0.95rem] font-medium border border-border-subtle rounded bg-bg-app text-text-main hover:bg-gray-100 transition-colors cursor-pointer"
+                            >
+                                Annuleren
+                            </button>
+                            <button
+                                onClick={() => applyPadChange(pendingPad)}
+                                className="px-5 py-2 text-[0.95rem] font-medium border border-primary bg-primary text-white rounded hover:bg-primary-dark transition-colors cursor-pointer"
+                            >
+                                Ja, overschrijven
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
