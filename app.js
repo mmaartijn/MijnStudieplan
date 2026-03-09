@@ -328,8 +328,13 @@ function renderStep2() {
     </div>
   ` : '';
 
-  const total = S.modules.reduce((s, m) => s + m.outcomes.length, 0);
-  const achCount = S.achieved.size;
+  const total = S.modules.reduce((s, m) => s + m.outcomes.reduce((totalEC, o) => totalEC + (o.studiepunten || 0), 0), 0);
+  const achCount = Array.from(S.achieved).reduce((sum, key) => {
+    const [modCode, idxStr] = key.split('|');
+    const mod = S.modules.find(m => m.code === modCode);
+    const outcome = mod?.outcomes[parseInt(idxStr, 10)];
+    return sum + (outcome?.studiepunten || 0);
+  }, 0);
   const pct = total ? Math.round(achCount / total * 100) : 0;
 
   // 4×4 grid header
