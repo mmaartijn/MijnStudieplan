@@ -52,6 +52,17 @@ export default function Step2({
         setPendingPad(null);
     };
 
+    const isOfferedInPeriod = (moduleCode: string, period: number): boolean => {
+        const mod = curriculum.modules.find(m => m.code === moduleCode);
+        if (!mod || !mod.periodes || mod.periodes.length === 0) return true;
+        // After parseJSON, periodes is stored as [[1,2]] (wrapped array)
+        const flatPeriodes = (mod.periodes as unknown as number[][]).flat();
+        if (flatPeriodes.length === 0) return true;
+        // Also allow the period directly after an offered period (4 wraps to 1)
+        const prevPeriod = ((period - 2 + 4) % 4) + 1;
+        return flatPeriodes.includes(period) || flatPeriodes.includes(prevPeriod);
+    };
+
     const onDragStart = (e: React.DragEvent, code: string, idx: number, fromKey: string) => {
         setDraggedItem({ code, idx, fromKey });
         e.dataTransfer.effectAllowed = 'move';
@@ -149,6 +160,9 @@ export default function Step2({
                                     cellEC += m?.outcomes?.[i.idx]?.studiepunten || 0;
                                 });
 
+                                const isDragTarget = draggedItem && draggedItem.fromKey !== key;
+                                const dragOffered = isDragTarget ? isOfferedInPeriod(draggedItem!.code, p) : null;
+
                                 return (
                                     <div key={p} className="bg-card border border-border-subtle rounded-radius p-2 flex flex-col gap-1 min-h-[130px]">
                                         <div className="flex items-center justify-between gap-1 mb-1">
@@ -164,7 +178,13 @@ export default function Step2({
                                         </div>
 
                                         <div
-                                            className={`flex-1 flex flex-col gap-1 rounded border-2 border-dashed p-1 relative transition-colors ${draggedItem && draggedItem.fromKey !== key ? 'border-primary-light bg-primary-light/30' : 'border-transparent'}`}
+                                            className={`flex-1 flex flex-col gap-1 rounded border-2 border-dashed p-1 relative transition-colors ${
+                                                isDragTarget
+                                                    ? dragOffered
+                                                        ? 'border-green-400 bg-green-50'
+                                                        : 'border-orange-400 bg-orange-50'
+                                                    : 'border-transparent'
+                                            }`}
                                             onDragOver={onDragOver}
                                             onDrop={(e) => onDrop(e, key)}
                                         >
@@ -175,6 +195,7 @@ export default function Step2({
                                                 if (!out) return null;
                                                 const kString = `${item.code}|${item.idx}`;
                                                 const isDone = achieved.has(kString);
+                                                const offeredHere = isOfferedInPeriod(item.code, p);
 
                                                 const itemSpan = item.code.includes('-') ? 2 : 1;
 
@@ -184,8 +205,8 @@ export default function Step2({
                                                         draggable
                                                         onDragStart={(e) => onDragStart(e, item.code, item.idx, key)}
                                                         onClick={() => setInfoModalItem({ code: item.code, activeIdx: item.idx })}
-                                                        className={`flex items-center gap-1.5 p-1.5 border rounded cursor-grab bg-white transition-opacity select-none active:cursor-grabbing hover:shadow-sm hover:border-primary shrink-0
-                              ${isDone ? 'bg-success-light border-[var(--color-success)] opacity-75' : 'border-border-subtle'}
+                                                        className={`flex items-center gap-1.5 p-1.5 border rounded cursor-grab transition-opacity select-none active:cursor-grabbing hover:shadow-sm hover:border-primary shrink-0
+                              ${isDone ? 'bg-success-light border-[var(--color-success)] opacity-75' : offeredHere ? 'bg-white border-border-subtle' : 'bg-orange-50 border-orange-300'}
                             `}
                                                         style={{
                                                             width: itemSpan > 1 ? `calc(${itemSpan * 100}% + ${(itemSpan - 1) * 2.2}rem)` : '100%',
@@ -198,6 +219,12 @@ export default function Step2({
                                                             <span className={`block whitespace-nowrap overflow-hidden text-ellipsis text-[0.78rem] leading-tight ${isDone ? 'line-through text-muted' : ''}`}>{out.name}</span>
                                                         </div>
                                                         {out.studiepunten > 0 && <span className="text-[0.68rem] font-bold text-primary shrink-0">{out.studiepunten}</span>}
+                                                        {!offeredHere && !isDone && (
+                                                            <span
+                                                                title="Let op: Hier moet je goedkeuring aan de examencommissie voor vragen"
+                                                                className="text-orange-500 shrink-0 cursor-help text-[0.85rem] leading-none"
+                                                            >⚠️</span>
+                                                        )}
                                                     </div>
                                                 );
                                             })}

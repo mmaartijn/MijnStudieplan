@@ -18,6 +18,17 @@ export default function PrintView({ step, student, curriculum, planGrid, achieve
     const commentsList: { y: number; p: number; comment: string }[] = [];
     const achievedItems: { code: string; mod: any; out: any }[] = [];
 
+    const isOfferedInPeriod = (moduleCode: string, period: number): boolean => {
+        const mod = curriculum.modules.find(m => m.code === moduleCode);
+        if (!mod || !mod.periodes || mod.periodes.length === 0) return true;
+        // After parseJSON, periodes is stored as [[1,2]] (wrapped array)
+        const flatPeriodes = (mod.periodes as unknown as number[][]).flat();
+        if (flatPeriodes.length === 0) return true;
+        // Also allow the period directly after an offered period (4 wraps to 1)
+        const prevPeriod = ((period - 2 + 4) % 4) + 1;
+        return flatPeriodes.includes(period) || flatPeriodes.includes(prevPeriod);
+    };
+
     // Verzamelen geplande items en opmerkingen
     for (let y = 1; y <= 4; y++) {
         for (let p = 1; p <= 4; p++) {
@@ -97,15 +108,23 @@ export default function PrintView({ step, student, curriculum, planGrid, achieve
                                 row.items.map((item: any, i: number) => {
                                     const mod = curriculum.modules.find(m => m.code === item.code);
                                     const out = mod?.outcomes?.[item.idx];
+                                    const offeredHere = isOfferedInPeriod(item.code, row.p);
                                     return (
-                                        <tr key={`${row.y}_${row.p}_${item.code}_${item.idx}`} className="odd:bg-gray-50">
+                                        <tr key={`${row.y}_${row.p}_${item.code}_${item.idx}`} className={offeredHere ? 'odd:bg-gray-50' : 'bg-orange-50'}>
                                             {i === 0 && (
                                                 <td rowSpan={row.items.length} className="border-b border-gray-300 p-2 font-semibold text-gray-800 align-top">
                                                     Jaar {row.y}, Periode {row.p}
                                                 </td>
                                             )}
                                             <td className={`p-2 text-gray-800 ${i === row.items.length - 1 ? 'border-b border-gray-300' : ''}`}>[{item.code}] {mod?.naam}</td>
-                                            <td className={`p-2 text-gray-800 ${i === row.items.length - 1 ? 'border-b border-gray-300' : ''}`}>{out?.name}</td>
+                                            <td className={`p-2 text-gray-800 ${i === row.items.length - 1 ? 'border-b border-gray-300' : ''}`}>
+                                                {out?.name}
+                                                {!offeredHere && (
+                                                    <span className="ml-2 inline-flex items-center gap-1 text-orange-700 font-semibold text-[8pt]">
+                                                        ⚠ Niet aangeboden in periode {row.p} — goedkeuring examencommissie vereist
+                                                    </span>
+                                                )}
+                                            </td>
                                             {i === 0 && (
                                                 <td rowSpan={row.items.length} className="border-b border-gray-300 p-2 font-bold text-center text-gray-800 align-top">
                                                     {row.ec}
