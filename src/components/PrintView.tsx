@@ -4,16 +4,17 @@ interface PrintViewProps {
     step: number;
     student: StudentInfo;
     curriculum: CurriculumData | null;
+    displayName: string;
     planGrid: PlanGrid;
     achieved: Set<string>;
     numYears: number;
 }
 
-export default function PrintView({ step, student, curriculum, planGrid, achieved, numYears }: PrintViewProps) {
+export default function PrintView({ step, student, curriculum, displayName, planGrid, achieved, numYears }: PrintViewProps) {
     if (step !== 2 || !curriculum) return <div className="hidden"></div>;
 
     const { name, number, coach, date } = student;
-    const opl = curriculum.studiepaden ? 'Informatica ICT' : 'Opleiding'; // naive fallback for display
+    const opl = displayName || curriculum.naamOpleiding || 'Opleiding';
 
     const plannedRows: any[] = [];
     const commentsList: { y: number; p: number; comment: string }[] = [];

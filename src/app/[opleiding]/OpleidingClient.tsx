@@ -210,6 +210,7 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
                 step={view === 'plan' ? 2 : 1}
                 student={student}
                 curriculum={curriculum}
+                displayName={displayName}
                 planGrid={planGrid}
                 achieved={achieved}
                 numYears={numYears}
