@@ -100,11 +100,32 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
         setToetsonderdeelStates(prev => {
             const next = new Map(prev);
             const current = next.get(key) ?? 'unchecked';
-            if (current === 'unchecked') next.set(key, 'checked');
-            else next.set(key, 'unchecked'); // checked → unchecked, vervallen → unchecked
+            next.set(key, current === 'unchecked' ? 'checked' : 'unchecked');
             return next;
         });
     };
+
+    // Sync LU achieved state whenever TO states change
+    useEffect(() => {
+        if (!curriculum) return;
+        setAchieved(prev => {
+            const next = new Set(prev);
+            for (const mod of curriculum.modules) {
+                const outcomes = mod.outcomes ?? [];
+                for (let i = 0; i < outcomes.length; i++) {
+                    const numTO = outcomes[i].toetsonderdelen?.length ?? 0;
+                    if (numTO === 0) continue;
+                    const luKey = `${mod.code}|${i}`;
+                    const allChecked = Array.from({ length: numTO }, (_, ti) =>
+                        toetsonderdeelStates.get(`${mod.code}|${i}|${ti}`) === 'checked'
+                    ).every(Boolean);
+                    if (allChecked) next.add(luKey);
+                    else next.delete(luKey);
+                }
+            }
+            return next;
+        });
+    }, [toetsonderdeelStates, curriculum]);
 
     const handleNewStart = () => {
         localStorage.removeItem(storageKey);
