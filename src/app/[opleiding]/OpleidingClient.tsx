@@ -115,7 +115,7 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
     return (
         <div className="min-h-screen bg-bg-app flex flex-col print:bg-white text-text-main">
             <Header
-                backLabel={view === 'plan' ? `← Uitleg ${displayName}` : undefined}
+                backLabel={view === 'plan' ? 'Uitleg over mijn studieplan' : undefined}
                 onBack={view === 'plan' ? () => setView('uitleg') : undefined}
                 showActions={view === 'plan'}
                 onSave={handleSave}
@@ -198,11 +198,7 @@ function UitlegScherm({ displayName, savedData, loading, onStart, onResume, onNe
         : null;
 
     return (
-        <div className="space-y-6 animate-fade-in">
-            <div>
-                <h2 className="text-2xl font-bold mb-1">{displayName}</h2>
-                <p className="text-muted text-sm">Stel je studieplan op en houd bij welke leeruitkomsten je hebt behaald.</p>
-            </div>
+        <div className="space-y-8 animate-fade-in max-w-[760px]">
 
             {savedData ? (
                 <div className="bg-primary-light border-2 border-primary rounded-xl p-5 flex items-center justify-between gap-4 flex-wrap shadow-sm">
@@ -229,16 +225,74 @@ function UitlegScherm({ displayName, savedData, loading, onStart, onResume, onNe
                 </div>
             ) : null}
 
-            <div className="bg-card border border-border-subtle rounded-xl p-6 space-y-3">
-                <h3 className="font-bold text-lg">Hoe werkt dit?</h3>
-                <ol className="list-decimal list-inside space-y-2 text-[0.95rem] text-text-main">
-                    <li>Je studieplan laat zien welke leeruitkomsten je wanneer wilt behalen.</li>
-                    <li>Sleep leeruitkomsten naar de periode waarin jij ze wilt behalen.</li>
-                    <li>Vink leeruitkomsten af zodra je ze hebt behaald.</li>
-                    <li>Sla je plan op en print het uit voor overleg met je studieloopbaanbegeleider.</li>
-                </ol>
-                <p className="text-sm text-muted pt-1">
-                    Je plan wordt lokaal in je browser opgeslagen. Gebruik dezelfde browser en computer om je plan te hervatten.
+            <div className="space-y-4">
+                <h2 className="text-2xl font-bold">Het studieadvies</h2>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    Aan het einde van je eerste jaar geeft Avans je een studieadvies. Dat advies is geen eindoordeel, maar een signaal: hoe staat het er voor, en wat is een realistisch vervolg? Avans onderscheidt drie soorten adviezen.
+                </p>
+                <div className="space-y-3">
+                    <div className="flex gap-3 items-start">
+                        <span className="mt-1 shrink-0 w-3 h-3 rounded-full bg-emerald-500"></span>
+                        <p className="text-[0.97rem] leading-relaxed text-text-main">
+                            <strong>Positief</strong> — Je hebt 45 EC of meer behaald. Je stroomt normaal door naar jaar 2.
+                        </p>
+                    </div>
+                    <div className="flex gap-3 items-start">
+                        <span className="mt-1 shrink-0 w-3 h-3 rounded-full bg-yellow-400"></span>
+                        <p className="text-[0.97rem] leading-relaxed text-text-main">
+                            <strong>Advies passend studietraject</strong> — Je hebt minder dan 45 EC behaald, maar er is vertrouwen dat je de opleiding succesvol kunt afronden. Je kunt jaar 1 overdoen, of je vraagt de examencommissie om toestemming om toch (een deel van) jaar 2 te volgen. Daarvoor heb je een goedgekeurd studieplan nodig.
+                        </p>
+                    </div>
+                    <div className="flex gap-3 items-start">
+                        <span className="mt-1 shrink-0 w-3 h-3 rounded-full bg-red-400"></span>
+                        <p className="text-[0.97rem] leading-relaxed text-text-main">
+                            <strong>Verwijsadvies</strong> — Je hebt minder dan 45 EC behaald en er is onvoldoende vertrouwen dat de opleiding bij jou past. Doorstromen naar jaar 2 is in principe niet mogelijk. Je slb&apos;er begeleidt je richting Student Support of een andere studiekeuze. In uitzonderlijke gevallen kan de examencommissie toch toestemming verlenen, maar ook dan is een studieplan vereist.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="space-y-3">
+                <h2 className="text-2xl font-bold">Het studieplan</h2>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    Bij een advies passend studietraject of verwijsadvies stel je een studieplan op. Dit plan is <em>van en voor jou</em>: jij bent zelf verantwoordelijk voor het opstellen, bijhouden en indienen ervan. Het is geen eenmalig formulier, maar een levend document dat je elke periode bijwerkt in overleg met je studieloopbaanbegeleider (slb&apos;er).
+                </p>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    In het studieplan leg je vast welke leeruitkomsten je wanneer wilt behalen, in welke volgorde, en hoe realistisch dat is gezien je persoonlijke situatie. Je slb&apos;er kijkt met je mee: kloppen de combinaties van modules, is de werkdruk haalbaar, en houd je rekening met de aanbieding van modules per periode? Uiteindelijk beslist de examencommissie of je op basis van dit plan door mag naar jaar 2.
+                </p>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    Heb je toestemming gekregen? Dan leg de slb&apos;er zijn goedkeuring vast in Osiris, zodat de examencommissie dit kan inzien.
+                </p>
+            </div>
+
+            <div className="space-y-3">
+                <h2 className="text-2xl font-bold">Wanneer en hoe?</h2>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    Het proces rondom het studieadvies loopt over het hele eerste jaar, met vaste contactmomenten:
+                </p>
+                <div className="border-l-2 border-primary-light pl-5 space-y-4">
+                    <div>
+                        <p className="font-semibold text-[0.97rem]">Periode 2</p>
+                        <p className="text-[0.93rem] text-muted leading-relaxed">Je slb&apos;er bespreekt je studievoortgang in een individueel gesprek. Op basis van de resultaten uit periode 1 ontvang je vóór 1 februari een eerste studiesignaal én een officiële brief van de examencommissie. Als je al een studieplan hebt, bespreek je de haalbaarheid ervan.</p>
+                    </div>
+                    <div>
+                        <p className="font-semibold text-[0.97rem]">Periode 3</p>
+                        <p className="text-[0.93rem] text-muted leading-relaxed">Het proces van de studieadviezen wordt toegelicht aan alle studenten. Je slb&apos;er bespreekt dit in het groepsgesprek en in het individuele gesprek.</p>
+                    </div>
+                    <div>
+                        <p className="font-semibold text-[0.97rem]">Periode 4, week 10–11</p>
+                        <p className="text-[0.93rem] text-muted leading-relaxed">De definitieve cijfers komen binnen. Op maandag van week 11 stemmen slb&apos;ers en de examencommissie de adviezen op elkaar af. Op dinsdag bespreek je samen met je slb&apos;er het definitieve studieplan, keurt de slb&apos;er het goed en dien je het in bij de examencommissie. Vrijdag van week 11 neemt de examencommissie een besluit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="space-y-3">
+                <h2 className="text-2xl font-bold">Hoe gebruik je dit hulpmiddel?</h2>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    Met dit hulpmiddel maak je jouw studieplan concreet en actueel. Je sleept leeruitkomsten naar de periode waarin jij ze wilt behalen, houdt bij welke je al hebt gehaald, en print het overzicht uit voor je gesprek met de slb&apos;er.
+                </p>
+                <p className="text-[0.97rem] leading-relaxed text-text-main">
+                    Je plan wordt lokaal opgeslagen in je browser. Gebruik steeds dezelfde browser en computer om verder te gaan waar je gebleven was.
                 </p>
             </div>
 
@@ -249,7 +303,7 @@ function UitlegScherm({ displayName, savedData, loading, onStart, onResume, onNe
                         disabled={loading}
                         className="px-6 py-3 bg-primary text-white font-semibold rounded-radius shadow-sm hover:bg-primary-dark transition-colors disabled:opacity-50 text-[1rem] cursor-pointer"
                     >
-                        {loading ? 'Laden...' : `Ga naar mijn studieoverzicht — ${displayName}`}
+                        {loading ? 'Laden...' : 'Ga naar mijn studieplan'}
                     </button>
                 </div>
             )}

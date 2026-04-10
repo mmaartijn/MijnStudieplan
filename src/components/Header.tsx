@@ -14,10 +14,11 @@ export default function Header({ backLabel, backHref, onBack, showActions, onSav
         <header className="bg-card border-b border-border-subtle p-3.5 px-6 sticky top-0 z-50 shadow-sm print:hidden">
             <div className="max-w-[1140px] mx-auto flex items-center justify-between gap-6 flex-wrap">
                 <div className="flex items-center gap-4 flex-wrap">
+                    <h1 className="text-xl font-bold text-primary whitespace-nowrap">Mijn Studieplan</h1>
                     {backLabel && backHref && (
                         <Link
                             href={backHref}
-                            className="text-[0.85rem] font-medium text-primary hover:underline whitespace-nowrap"
+                            className="text-[0.85rem] font-medium text-muted hover:text-primary hover:underline whitespace-nowrap"
                         >
                             {backLabel}
                         </Link>
@@ -25,12 +26,11 @@ export default function Header({ backLabel, backHref, onBack, showActions, onSav
                     {backLabel && onBack && (
                         <button
                             onClick={onBack}
-                            className="text-[0.85rem] font-medium text-primary hover:underline whitespace-nowrap bg-transparent border-none cursor-pointer p-0"
+                            className="text-[0.85rem] font-medium text-muted hover:text-primary hover:underline whitespace-nowrap bg-transparent border-none cursor-pointer p-0"
                         >
                             {backLabel}
                         </button>
                     )}
-                    <h1 className="text-xl font-bold text-primary whitespace-nowrap">Mijn Studieplan</h1>
                 </div>
 
                 {showActions && (
