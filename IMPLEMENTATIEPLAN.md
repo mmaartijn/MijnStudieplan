@@ -1,18 +1,17 @@
 # Implementatieplan — MijnStudiepad nieuwe features
 
-> Status: Concept — nog te implementeren  
 > Datum: 2026-04-10
 
 ---
 
 ## Overzicht
 
-| # | Feature | Prioriteit |
-|---|---------|-----------|
-| 1 | URL-routing per opleiding (geen tegels op homepage) | Hoog |
-| 2 | Homepage uitleg ATD-proces | Hoog |
-| 3 | Toetsonderdelen in leeruitkomst-popup | Middel |
-| 4 | Toetsonderdelen-staat bij slepen naar ander jaar | Middel |
+| # | Feature | Status |
+|---|---------|--------|
+| 1 | URL-routing per opleiding + uitleg-scherm per opleiding | ✅ Afgerond |
+| 2 | Homepage uitleg ATD-proces | ✅ Afgerond (samengevoegd met Feature 1) |
+| 3 | Toetsonderdelen in leeruitkomst-popup | 🔄 In uitvoering |
+| 4 | Toetsonderdelen-staat bij slepen naar ander jaar | ⏳ Gepland |
 
 ---
 
