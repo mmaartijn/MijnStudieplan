@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import OpleidingClient from './OpleidingClient';
 import { BASE_PATH } from '@/lib/constants';
 
@@ -14,13 +14,23 @@ const OPLEIDING_MAP: Record<string, { displayName: string; jsonUrl: string }> = 
 };
 
 export function generateStaticParams() {
-    return Object.keys(OPLEIDING_MAP).map((opleiding) => ({ opleiding }));
+    return Object.keys(OPLEIDING_MAP).flatMap((opleiding) => [
+        { opleiding: opleiding.toLowerCase() },
+        { opleiding: opleiding.toUpperCase() },
+        { opleiding: opleiding.charAt(0).toUpperCase() + opleiding.slice(1).toLowerCase() },
+    ]);
 }
 
 export default async function OpleidingPage({ params }: { params: Promise<{ opleiding: string }> }) {
     const { opleiding } = await params;
-    const meta = OPLEIDING_MAP[opleiding.toLowerCase()];
+    const lowerOpleiding = opleiding.toLowerCase();
+    const meta = OPLEIDING_MAP[lowerOpleiding];
+
     if (!meta) notFound();
 
-    return <OpleidingClient opleiding={opleiding.toLowerCase()} displayName={meta.displayName} jsonUrl={meta.jsonUrl} />;
+    if (opleiding !== lowerOpleiding) {
+        redirect(`/${lowerOpleiding}`);
+    }
+
+    return <OpleidingClient opleiding={lowerOpleiding} displayName={meta.displayName} jsonUrl={meta.jsonUrl} />;
 }
