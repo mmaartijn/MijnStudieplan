@@ -33,3 +33,9 @@ body {
   line-height: 1.5;
   min-height: 100vh;
 }
+
+@layer utilities {
+  .rounded-radius {
+    border-radius: 8px;
+  }
+}

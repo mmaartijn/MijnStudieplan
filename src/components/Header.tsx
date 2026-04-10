@@ -42,13 +42,13 @@ export default function Header({ backLabel, backHref, onBack, showActions, onSav
                     <div className="flex gap-2.5 items-center">
                         <button
                             onClick={onSave}
-                            className="px-4 py-1.5 bg-success text-white border border-success-dark rounded text-[0.85rem] font-semibold hover:bg-success-dark transition-all shadow-sm cursor-pointer"
+                            className="px-4 py-1.5 bg-success text-white border border-success-dark rounded-radius text-[0.85rem] font-semibold hover:bg-success-dark transition-all shadow-sm cursor-pointer"
                         >
                             💾 Opslaan
                         </button>
                         <button
                             onClick={onPrint}
-                            className="px-3.5 py-1.5 bg-success text-white rounded-radius text-[0.82rem] font-medium hover:bg-success-dark transition-colors cursor-pointer"
+                            className="px-4 py-1.5 bg-success text-white border border-success-dark rounded-radius text-[0.85rem] font-semibold hover:bg-success-dark transition-all shadow-sm cursor-pointer"
                         >
                             🖨 Afdrukken / PDF
                         </button>
