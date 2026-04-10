@@ -166,6 +166,7 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
                         numYears={numYears}
                         setNumYears={setNumYears}
                         toetsonderdeelStates={toetsonderdeelStates}
+                        setToetsonderdeelStates={setToetsonderdeelStates}
                         toggleToetsonderdeel={toggleToetsonderdeel}
                     />
                 )}

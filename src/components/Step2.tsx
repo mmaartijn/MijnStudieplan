@@ -15,11 +15,12 @@ interface Step2Props {
     numYears: number;
     setNumYears: Dispatch<SetStateAction<number>>;
     toetsonderdeelStates: Map<string, ToetsonderdeelState>;
+    setToetsonderdeelStates: Dispatch<SetStateAction<Map<string, ToetsonderdeelState>>>;
     toggleToetsonderdeel: (key: string) => void;
 }
 
 export default function Step2({
-    curriculum, selectedPad, setSelectedPad, planGrid, setPlanGrid, achieved, setAchieved, commentOpen, setCommentOpen, numYears, setNumYears, toetsonderdeelStates, toggleToetsonderdeel
+    curriculum, selectedPad, setSelectedPad, planGrid, setPlanGrid, achieved, setAchieved, commentOpen, setCommentOpen, numYears, setNumYears, toetsonderdeelStates, setToetsonderdeelStates, toggleToetsonderdeel
 }: Step2Props) {
 
     const [draggedItem, setDraggedItem] = useState<{ code: string, idx: number, fromKey: string } | null>(null);
@@ -81,6 +82,26 @@ export default function Step2({
         if (!draggedItem) return;
         const { code, idx, fromKey } = draggedItem;
         if (fromKey === toKey) return;
+
+        // Mark checked toetsonderdelen as 'vervallen' when dragging to a different year
+        const fromYear = parseInt(fromKey.split('_')[0]);
+        const toYear = parseInt(toKey.split('_')[0]);
+        if (fromYear !== toYear) {
+            const mod = curriculum.modules.find(m => m.code === code);
+            const numToetsonderdelen = mod?.outcomes?.[idx]?.toetsonderdelen?.length ?? 0;
+            if (numToetsonderdelen > 0) {
+                setToetsonderdeelStates(prev => {
+                    const next = new Map(prev);
+                    for (let ti = 0; ti < numToetsonderdelen; ti++) {
+                        const key = `${code}|${idx}|${ti}`;
+                        if (next.get(key) === 'checked') {
+                            next.set(key, 'vervallen');
+                        }
+                    }
+                    return next;
+                });
+            }
+        }
 
         setPlanGrid(prev => {
             const g = { ...prev };
