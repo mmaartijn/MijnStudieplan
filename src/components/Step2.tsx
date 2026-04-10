@@ -132,8 +132,28 @@ export default function Step2({
         const key = `${code}|${idx}`;
         setAchieved(prev => {
             const next = new Set(prev);
-            if (next.has(key)) next.delete(key);
-            else next.add(key);
+            const willBeAchieved = !next.has(key);
+            if (willBeAchieved) next.add(key);
+            else next.delete(key);
+
+            // Bulk-update all toetsonderdelen of this leeruitkomst
+            const mod = curriculum.modules.find(m => m.code === code);
+            const numTO = mod?.outcomes?.[idx]?.toetsonderdelen?.length ?? 0;
+            if (numTO > 0) {
+                setToetsonderdeelStates(prev => {
+                    const next = new Map(prev);
+                    for (let ti = 0; ti < numTO; ti++) {
+                        const toKey = `${code}|${idx}|${ti}`;
+                        const currentState = next.get(toKey) ?? 'unchecked';
+                        // Don't override 'vervallen' state
+                        if (currentState !== 'vervallen') {
+                            next.set(toKey, willBeAchieved ? 'checked' : 'unchecked');
+                        }
+                    }
+                    return next;
+                });
+            }
+
             return next;
         });
     };
@@ -148,7 +168,7 @@ export default function Step2({
                 <div className="min-w-[210px]">
                     <div className="text-sm text-muted mb-1">Behaald: {achievedEC} / {totalEC} &nbsp;({pct}%)</div>
                     <div className="h-2 bg-border-subtle rounded-full overflow-hidden">
-                        <div className="h-full bg-success rounded-full transition-all duration-300" style={{ width: `${pct}%` }}></div>
+                        <div className="h-full bg-accent rounded-full transition-all duration-300" style={{ width: `${pct}%` }}></div>
                     </div>
                 </div>
             </div>
@@ -191,7 +211,14 @@ export default function Step2({
                                 return (
                                     <div key={p} className="bg-card border border-border-subtle rounded-radius p-2 flex flex-col gap-1 min-h-[130px]">
                                         <div className="flex items-center justify-between gap-1 mb-1">
-                                            <span className="text-[0.7rem] font-bold text-primary bg-primary-light rounded-full px-2 py-[1px]">{cellEC} EC</span>
+                                            <span
+                                                className={`text-[0.7rem] font-bold rounded-full px-2 py-[1px] transition-colors ${
+                                                    cellEC > 15
+                                                        ? 'text-accent bg-accent-light'
+                                                        : 'text-primary bg-primary-light'
+                                                }`}
+                                                title={cellEC > 15 ? `Let op: ${cellEC} EC is meer dan 15 EC in één periode` : undefined}
+                                            >{cellEC} EC{cellEC > 15 ? ' ⚠' : ''}</span>
                                             <button
                                                 onClick={() => toggleComment(key)}
                                                 className={`w-[22px] h-[22px] border rounded flex items-center justify-center text-[0.78rem] transition-colors
@@ -207,7 +234,7 @@ export default function Step2({
                                                 isDragTarget
                                                     ? dragOffered
                                                         ? 'border-green-400 bg-green-50'
-                                                        : 'border-orange-400 bg-orange-50'
+                                                        : 'border-accent bg-accent-light'
                                                     : 'border-transparent'
                                             }`}
                                             onDragOver={onDragOver}
@@ -231,7 +258,7 @@ export default function Step2({
                                                         onDragStart={(e) => onDragStart(e, item.code, item.idx, key)}
                                                         onClick={() => setInfoModalItem({ code: item.code, activeIdx: item.idx })}
                                                         className={`flex items-center gap-1.5 p-1.5 border rounded cursor-grab transition-opacity select-none active:cursor-grabbing hover:shadow-sm hover:border-primary shrink-0
-                              ${isDone ? 'bg-success-light border-[var(--color-success)] opacity-75' : offeredHere ? 'bg-white border-border-subtle' : 'bg-orange-50 border-orange-300'}
+                              ${isDone ? 'bg-success-light border-[var(--color-success)] opacity-75' : offeredHere ? 'bg-white border-border-subtle' : 'bg-accent-light border-accent'}
                             `}
                                                         style={{
                                                             width: itemSpan > 1 ? `calc(${itemSpan * 100}% + ${(itemSpan - 1) * 2.2}rem)` : '100%',
@@ -247,7 +274,7 @@ export default function Step2({
                                                         {!offeredHere && !isDone && (
                                                             <span
                                                                 title="Let op: Hier moet je goedkeuring aan de examencommissie voor vragen"
-                                                                className="text-orange-500 shrink-0 cursor-help text-[0.85rem] leading-none"
+                                                                className="text-accent shrink-0 cursor-help text-[0.85rem] leading-none"
                                                             >⚠️</span>
                                                         )}
                                                     </div>
@@ -326,7 +353,7 @@ export default function Step2({
                             </button>
                             <button
                                 onClick={() => applyPadChange(pendingPad)}
-                                className="px-5 py-2 text-[0.95rem] font-medium border border-primary bg-primary text-white rounded hover:bg-primary-dark transition-colors cursor-pointer"
+                                className="px-5 py-2 text-[0.95rem] font-medium border border-success bg-success text-white rounded hover:bg-success-dark transition-colors cursor-pointer"
                             >
                                 Ja, overschrijven
                             </button>

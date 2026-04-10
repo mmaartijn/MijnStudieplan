@@ -74,7 +74,7 @@ export default function PrintModal({ student, setStudent, onClose, onConfirm }: 
                         </button>
                         <button
                             onClick={onConfirm}
-                            className="px-5 py-2 text-[0.9rem] font-medium border-none rounded bg-slate-800 text-white hover:bg-slate-900 transition-colors cursor-pointer"
+                            className="px-5 py-2 text-[0.9rem] font-medium border-none rounded bg-success text-white hover:bg-success-dark transition-colors cursor-pointer"
                         >
                             Bevestig & Print
                         </button>

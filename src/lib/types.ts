@@ -1,5 +1,6 @@
 export interface Toetsonderdeel {
     titel: string;
+    vorm?: string;
 }
 
 export interface Outcome {

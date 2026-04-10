@@ -238,7 +238,7 @@ function UitlegScherm({ savedData, loading, onStart, onResume, onNewStart }: Uit
         <button
             onClick={onStart}
             disabled={loading}
-            className="px-5 py-2.5 bg-primary text-white font-semibold rounded-radius shadow-sm hover:bg-primary-dark transition-colors disabled:opacity-50 text-[0.95rem] cursor-pointer whitespace-nowrap"
+            className="px-5 py-2.5 bg-success text-white font-semibold rounded-radius shadow-sm hover:bg-success-dark transition-colors disabled:opacity-50 text-[0.95rem] cursor-pointer whitespace-nowrap"
         >
             {loading ? 'Laden...' : 'Ga naar mijn studieplan'}
         </button>
@@ -271,7 +271,7 @@ function UitlegScherm({ savedData, loading, onStart, onResume, onNewStart }: Uit
                             <button
                                 onClick={onResume}
                                 disabled={loading}
-                                className="bg-primary text-white border-none hover:bg-primary-dark px-4 py-2 font-semibold text-sm rounded shadow-sm transition-colors disabled:opacity-50 cursor-pointer"
+                                className="bg-success text-white border-none hover:bg-success-dark px-4 py-2 font-semibold text-sm rounded shadow-sm transition-colors disabled:opacity-50 cursor-pointer"
                             >
                                 {loading ? 'Laden...' : 'Hervatten'}
                             </button>

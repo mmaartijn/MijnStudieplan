@@ -40,7 +40,7 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                     </h2>
                     <button
                         onClick={onClose}
-                        className="w-8 h-8 rounded-full border-none bg-transparent hover:bg-red-50 hover:text-red-600 text-[1.5rem] flex items-center justify-center leading-none text-muted transition-colors cursor-pointer"
+                        className="w-8 h-8 rounded-full border-none bg-transparent hover:bg-success-light hover:text-success text-[1.5rem] flex items-center justify-center leading-none text-muted transition-colors cursor-pointer"
                     >
                         &times;
                     </button>
@@ -65,7 +65,11 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                                             checked={isAchieved}
                                             onChange={() => toggleAchieved(code, i)}
                                         />
-                                        <h4 className="text-primary text-[1.05rem] font-bold m-0">{o.name}</h4>
+                                        <h4
+                                            className="text-primary text-[1.05rem] font-bold m-0 cursor-pointer hover:text-success transition-colors"
+                                            onClick={() => toggleAchieved(code, i)}
+                                            title="Klik om aan/uit te vinken"
+                                        >{o.name}</h4>
                                     </div>
                                     <span className="text-[0.8rem] font-bold bg-primary-light text-primary rounded-[10px] px-2 py-[1px] whitespace-nowrap">{o.studiepunten} EC</span>
                                 </div>
@@ -96,7 +100,7 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                                                             {isVervallen && '!'}
                                                         </span>
                                                         <span className={`text-[0.88rem] leading-snug ${isVervallen ? 'line-through text-muted' : 'text-text-main'}`}>
-                                                            {t.titel}
+                                                            {t.titel}{t.vorm ? ` (${t.vorm})` : ''}
                                                         </span>
                                                         {isVervallen && (
                                                             <span className="text-[0.75rem] text-orange-600 font-medium whitespace-nowrap">vervalt</span>
@@ -118,7 +122,7 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                 <div className="border-t border-border-subtle p-4 flex justify-end">
                     <button
                         onClick={onClose}
-                        className="px-5 py-2 text-[0.9rem] font-medium border border-border-subtle rounded bg-card text-text-main hover:bg-bg-app transition-colors cursor-pointer"
+                        className="px-5 py-2 text-[0.9rem] font-medium border border-success rounded bg-success text-white hover:bg-success-dark transition-colors cursor-pointer"
                     >
                         Sluiten
                     </button>
