@@ -5,7 +5,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Step2 from '@/components/Step2';
-import { CurriculumData, StudentInfo, PlanGrid } from '@/lib/types';
+import { CurriculumData, StudentInfo, PlanGrid, ToetsonderdeelState } from '@/lib/types';
 import PrintModal from '@/components/PrintModal';
 import PrintView from '@/components/PrintView';
 
@@ -36,6 +36,7 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
     const [achieved, setAchieved] = useState<Set<string>>(new Set());
     const [numYears, setNumYears] = useState<number>(4);
     const [commentOpen, setCommentOpen] = useState<Set<string>>(new Set());
+    const [toetsonderdeelStates, setToetsonderdeelStates] = useState<Map<string, ToetsonderdeelState>>(new Map());
     const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
     useEffect(() => {
@@ -72,6 +73,9 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
                 setCommentOpen(new Set((savedData.commentOpen as string[]) || []));
                 if (savedData.numYears) setNumYears(savedData.numYears as number);
                 if (savedData.student) setStudent(savedData.student as StudentInfo);
+                if (savedData.toetsonderdeelStates) {
+                    setToetsonderdeelStates(new Map(savedData.toetsonderdeelStates as [string, ToetsonderdeelState][]));
+                }
                 toast.success('Studieplan hervat!');
             } else {
                 const pads = Object.keys(data.studiepaden);
@@ -92,6 +96,16 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
         }
     };
 
+    const toggleToetsonderdeel = (key: string) => {
+        setToetsonderdeelStates(prev => {
+            const next = new Map(prev);
+            const current = next.get(key) ?? 'unchecked';
+            if (current === 'unchecked') next.set(key, 'checked');
+            else next.set(key, 'unchecked'); // checked → unchecked, vervallen → unchecked
+            return next;
+        });
+    };
+
     const handleNewStart = () => {
         localStorage.removeItem(storageKey);
         setSavedData(null);
@@ -104,6 +118,7 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
             planGrid,
             achieved: Array.from(achieved),
             commentOpen: Array.from(commentOpen),
+            toetsonderdeelStates: Array.from(toetsonderdeelStates.entries()),
             student,
             numYears,
             timestamp: new Date().toISOString(),
@@ -150,6 +165,8 @@ export default function OpleidingClient({ opleiding, displayName, jsonUrl }: Opl
                         setCommentOpen={setCommentOpen}
                         numYears={numYears}
                         setNumYears={setNumYears}
+                        toetsonderdeelStates={toetsonderdeelStates}
+                        toggleToetsonderdeel={toggleToetsonderdeel}
                     />
                 )}
             </main>

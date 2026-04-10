@@ -1,295 +1,548 @@
 {
-    "studiepaden": {
-        "Regulier": [
-            "1.1",
-            "1.2",
-            "1.3-1.4",
-            "1.3-1.4",
-            "2.1-2.2",
-            "2.1-2.2",
-            "2.3",
-            "2.4",
-            "3.1-3.2",
-            "3.1-3.2",
-            "3.3",
-            "3.4",
-            "4.1-4.2",
-            "4.1-4.2",
-            "4.3-4.4",
-            "4.3-4.4"
-        ],
-        "Associate Degree": [
-            "2.1-2.2",
-            "2.1-2.2",
-            "3.3",
-            "2.4",
-            "4.1-4.2",
-            "4.1-4.2",
-            "4.3-4.4",
-            "4.3-4.4"
-        ],
-        "Versneld": [
-            "1.1, 1.2",
-            "1.3-1.4",
-            "2.3",
-            "2.4",
-            "2.1-2.2",
-            "2.1-2.2",
-            "3.3",
-            "3.4",
-            "3.1-3.2",
-            "3.1-3.2",
-            "4.1-4.2",
-            "4.1-4.2",
-            "4.3-4.4",
-            "4.3-4.4"
-        ],
-        "Versneld met stagevrijstelling": [
-            "1.1, 1.2",
-            "1.3-1.4",
-            "2.3",
-            "2.4",
-            "2.1-2.2",
-            "2.1-2.2",
-            "3.3",
-            "3.4",
-            "4.1-4.2",
-            "4.1-4.2",
-            "4.3-4.4",
-            "4.3-4.4"
-        ]
-    },
-    "modules": [
-        {
-            "code": "1.1",
-            "naam": "Een deelproces automatiseren",
-            "periodes": [
-                1
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Dataselectie en -modificatie",
-                    "studiepunten": 3,
-                    "omschrijving": "Je ontwikkelt een database zodat data voor een gegeven bedrijfsproces opgeslagen kan worden. Hiervoor analyseer je het universum van discussie en stel je data flow diagrammen en de bijbehorende data dictionary op.\nJe ontwerpt vervolgens hiervoor een genormaliseerd databasemodel en genereert hiervan de database rekening houdend met de basis privacy- en security aspecten.\nJe ontwikkelt ten slotte database queries om uit deze database uit te lezen en te kunnen bewerken.\n\nJe werkt hierbij aan de eindkwalificatie software realiseren."
-                },
-                {
-                    "titel": "Individueel een proces automatiseren middels software.",
-                    "studiepunten": 7,
-                    "omschrijving": "Je automatiseert een deel van een gegeven bedrijfsproces. Hiervoor ontwerp je de applicatielogica met activiteitendiagrammen en ontwerp je middels wireframes de gebruikersinteractie.\nJe implementeert vervolgens de applicatielogica in Python en realiseert gebruikersinteractie met HTML en CSS.\nJe bekijkt hierbij de oplossingen van je medestudenten en geeft daar feedback op.\nJe denkt kritisch na over het gebruik van jouw software en test de werking van jouw product onder verschillende omstandigheden. Daarbij gebruik je ook ontvangen feedback om je software te verbeteren.\nJe werkt hierbij aan de eindkwalificatie software realiseren."
-                },
-                {
-                    "titel": "Jouw positionering in de beroepspraktijk",
-                    "studiepunten": 5,
-                    "omschrijving": "Je onderzoekt de positie van een informaticus in verschillende organisaties, bedrijfsculturen en de samenleving als geheel. Hierbij kijk je naar de bijdrage van informatica aan de maatschappij en welke trends er zich binnen de informatica afspelen. Je beschrijft de handelingen van een softwareontwikkelaar en waartoe deze dienen. Daarbij benoem je welke kwaliteiten deze professional moet bezitten.\nJe onderzoekt jouw eigen kwaliteiten en ambities, en evalueert in welke mate deze passen bij het beroep van de softwareontwikkelaar. Vervolgens beschrijf je jouw ontwikkelbehoeftes op basis van deze evaluatie.\nJe werkt hierbij aan de eindkwalificatie persoonlijk ontwikkelen."
-                }
-            ]
-        },
-        {
-            "code": "1.2",
-            "naam": "Data- en softwareontwerp",
-            "periodes": [
-                2
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Database ontwerpen en realiseren",
-                    "studiepunten": 4,
-                    "omschrijving": "Je herkent de data-aspecten van een gegeven casus en vertaalt deze naar een efficiënt relationeel databasemodel. Je creëert een database door dit model te implementeren.\nUit de gegeven casus identificeer je nuttige informatiebehoeften vanuit verschillende gebruikersinteracties. Hierbij houd je rekening met privacy- en securityaspecten.\nJe werkt hierbij aan de eindkwalificaties software ontwerpen en software realiseren."
-                },
-                {
-                    "titel": "Object-georiënteerd ontwerpen en realiseren",
-                    "studiepunten": 7,
-                    "omschrijving": "Je ontwerpt een monolithische object-georiënteerde applicatie waarbij je het ontwerp vastlegt in formele ontwerpdiagrammen.\nJe bouwt, op basis van deze ontwerpdiagrammen, de applicatie.\nJe programmeert aan de hand van geldende programmeerstandaarden en documenteert je code.\nJe test de werking van jouw applicatie onder verschillende omstandigheden.\nJe werkt hierbij aan de eindkwalificaties software ontwerpen en software realiseren."
-                },
-                {
-                    "titel": "Samenwerken en communiceren bij het ontwikkelen van software",
-                    "studiepunten": 4,
-                    "omschrijving": "Je ontwikkelt met een groep medestudenten een softwareoplossing op basis van instructies van een projectdocent. Om tot deze oplossing te komen vergader je met je groep waarbij je vergadertechnieken inzet.\nJe herkent conflicten binnen de groep en geeft aan wat je kan doen om deze conflicten op te lossen. Je geeft je groepsleden feedback aan de hand van feedbackmodellen. Je reflecteert op je eigen gedrag in de groep, op basis van je eigen ervaringen en je ontvangen feedback, om zo je sterktes en zwaktes te herkennen en te verbeteren.\nJe werkt hier aan de eindkwalificatie professioneel handelen."
-                }
-            ]
-        },
-        {
-            "code": "1.3-1.4",
-            "naam": "De software development life cycle",
-            "periodes": [
-                3,
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Probleemanalyse en Ontwerp",
-                    "studiepunten": 5,
-                    "omschrijving": "Je analyseert een aangereikt automatiseringsvraagstuk waarbij je de aanleiding, context, en functionele en systeemeisen helder en eenduidig in kaart brengt. Deze breng je samen in een requirementsdocument.\n\nJe vertaalt de gestelde eisen naar functioneel ontwerp waarbij je rekening houdt met het gebruik van je applicatie. Je maakt ook een technisch ontwerp middels diagrammen voor een object-georiënteerde client-server applicatie waarbij je gebruik maakt van overerving en polymorfisme.\nJe overweegt bij beiden alternatieve oplossingen.\n\nJe overweegt de impact op mens, milieu en maatschappij van de keuzes die je maakt. De keuzes die je tijdens het ontwerpen maakt verantwoord je op basis van een argumentatiemodel. Hierbij werk je aan de eindkwalificatie software ontwerpen."
-                },
-                {
-                    "titel": "Projectmatig software ontwikkelen",
-                    "studiepunten": 15,
-                    "omschrijving": "Je ontwikkelt met een groep medestudenten projectmatig een softwareoplossing waarbij je je houdt aan een vooraf gedefinieerde fasering en projectmethodiek. Hierbij werk je aan de eindkwalificatie projectmanagement. Je bent verantwoordelijk voor een deel van de te realiseren software en zet gedistribueerd configuratiebeheer in om de deelproducten te integreren tot een groepsproduct. Het uiteindelijke product maak je beschikbaar voor de opdrachtgever in een productieomgeving.\n\nAan de start van het project schrijf je een plan van aanpak met daarin onder andere samenwerkingsafspraken met de verdeling van de teamrollen. Je maakt daarbij ook een werkplanning.\n\nTijdens het project werk je professioneel samen met medestudenten onder begeleiding van een projectdocent. Je geeft groepsgenoten feedback en reflecteert over de voortgang van het project, je eigen bijdrage hieraan en je persoonlijke ontwikkeling. Je communiceert regelmatig op voorgeschreven wijze de groepsvoortgang aan de opdrachtgever.\n\nJe sluit het project af door het product over te dragen aan de opdrachtgever waarbij je rekening houdt met het publiek en zorgt voor een goede structuur in deze overdracht."
-                },
-                {
-                    "titel": "Software realiseren",
-                    "studiepunten": 10,
-                    "omschrijving": "Op basis van een functioneel en technisch ontwerp realiseer je object-georiënteerde client-server software, met overerving en polymorfisme, waarbij je gebruik maakt van Object-Relational Mapping (ORM) voor het creëren en benaderen van je relationele database waarbij je er voor zorgt dat de logica en front-end functionaliteit automatisch getest is.\nJe werkt hierbij aan de eindkwalificatie software realiseren."
-                }
-            ]
-        },
-        {
-            "code": "2.1-2.2",
-            "naam": "Fullstack development",
-            "periodes": [
-                1,
-                2
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Fullstack software realiseren",
-                    "studiepunten": 8,
-                    "omschrijving": "Je realiseert software op basis van een functioneel en technisch ontwerp. Je ontwikkelt en documenteert programmacode. Je realiseert je software in een client/server architectuur en maakt hierbij gebruik van een relationele database. Je ontwerpt je code met het oog op goede onderhoudbaarheid.\n\nJe werkt hierbij aan de eindkwalificatie software realiseren."
-                },
-                {
-                    "titel": "Projectmatig software ontwikkelen",
-                    "studiepunten": 15,
-                    "omschrijving": "Je ontwikkelt met een groep medestudenten projectmatig een softwareoplossing waarbij je je houdt aan een vooraf gedefinieerde fasering en projectmethodiek. Hierbij werk je aan alle eindkwalificaties (projectmanagement, analyseren/adviseren, software ontwerpen, software realiseren, software testen).\n\nAan de start van het project interview je de klant en maak je op basis daarvan een functioneel ontwerp. Bij het opstellen van de requirements neem je de belangen van alle stakeholders in overweging. Je schrijft een plan van aanpak met daarin onder andere samenwerkingsafspraken met de verdeling van de teamrollen. Je maakt daarbij ook een werkplanning.\n\nJe ontwikkelt, integreert en levert je software op aan de hand van een vooraf afgesproken ontwikkelstraat. Hierbij groeit de kwaliteit van de software aantoonbaar totdat de software in productie genomen kan worden. Speciale aandacht hierbij gaat uit testing. Het uiteindelijke product maak je beschikbaar voor de opdrachtgever in een productieomgeving.\n\nTijdens het project werk je professioneel samen met medestudenten en de externe klant, onder begeleiding van een projectdocent. Je communiceert regelmatig en proactief met de klant op een passende manier.\n\nJe geeft groepsgenoten feedback en reflecteert op de werkwijze en het proces, je eigen bijdrage hieraan en je persoonlijke ontwikkeling. Verbeterstappen die uit de reflectiemomenten komen voer je uit.\n\nJe sluit het project af door het product overtuigend over te dragen aan de opdrachtgever waarbij je rekening houdt met het publiek en zorgt voor een goede structuur in deze overdracht."
-                },
-                {
-                    "titel": "Software testen",
-                    "studiepunten": 7,
-                    "omschrijving": "In deze module over testen ga je aan de slag met Test Driven Development, waarbij je aan de hand van aangeleverde user stories voor een applicatie de bijbehorende acceptatiecriteria en relevante test scenario's gaat opstellen en uitwerken, zodanig dat ontwikkelaars concreet aan de gang kunnen met de implementatie van de user stories.\n\nJe zorgt ervoor dat de user stories eenduidig en volledig zijn, en dat de gebruikersflow end-to-end beschreven is, zodat je zuiver black box (functioneel) kunt testen. De testsuite die je vervolgens implementeert en oplevert, toont aan welke acceptatiecriteria succesvol zijn geïmplementeerd.\n\nNa de uitvoering van de tests op de aangeleverde applicatie, zul je de verkregen resultaten verzamelen in een rapportage, en deze mondeling toelichten, zodanig dat blijkt dat je in staat bent om testresultaten correct te interpreteren en aan de stakeholders een inhoudelijk onderbouwd advies te kunnen geven met betrekking tot de kwaliteit van de applicatie."
-                }
-            ]
-        },
-        {
-            "code": "2.4",
-            "naam": "Software architectuur",
-            "periodes": [
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Analyse van systeemarchitectuur op macro- meso-niveau",
-                    "studiepunten": 4,
-                    "omschrijving": "Je voert bij een beroepsspecifiek Engelssprekend bedrijf onderzoek uit naar het gebruikte applicatielandschap. Je analyseert het applicatielandschap op basis van de kwaliteitseisen die gesteld worden in ISO 25010. Vervolgens geef je jouw professionele mening over de huidige situatie. Je stelt een advies op waarbij je in het bijzonder aandacht hebt voor refactoringskansen. Dit advies draag je in het Engels schriftelijk over aan de stakeholders.\nJe werkt hierbij aan de eindkwalificaties analyseren en adviseren.\n\nBOKS:\nABV \"Adviseren\nAdviespresentatie\"\n\nDuurzame Ontwikkeling \"SDG focus op security gelinkt aan SDG 16 (vrede en veiligheid) en duurzame toekomstbestendigheid (SDG 12, duurzame productie)\"\n\nIntegration & Deployment \"Backwards compatibility. Dependency by contract. IAAS, PAAS, SAAS, FAAS\"\n\nOnderzoekend Vermogen \"Uitvoer van (klein) onderzoek:\n(Onderzoeksvragen opstellen), resultaten verzamelen, conclusie formuleren, advies uitbrengen\nKritisch alternatieven overwegen\""
-                },
-                {
-                    "titel": "Ontwerpen en realiseren van een softwarearchitectuur op meso- micro-niveau",
-                    "studiepunten": 6,
-                    "omschrijving": "Je ontwerpt en realiseert een complex objectgeoriënteerd softwaresysteem met als doel die te integreren in een bestaand groter applicatielandschap. Hierbij maak je gebruik van gevestigde standaarden en ontwerpprincipes binnen de industrie en ontwijk je actief valkuilen bij het schrijven van de software. Dit doe je onder andere door iteratief je software te ontwikkelen en refactoringstechnieken te gebruiken.\n\nJe beargumenteert jouw gemaakte ontwerp- en implementatiekeuzes op basis van onderhoudbaarheid en robuustheid .\n\nJe werkt hierbij aan de eindkwalificaties software ontwerpen en software realiseren."
-                },
-                {
-                    "titel": "Refactoring van code middels Design Patterns (micro-niveau)",
-                    "studiepunten": 5,
-                    "omschrijving": "Je ontwerpt en realiseert een complex objectgeoriënteerd softwaresysteem met als doel die te integreren in een bestaand groter applicatielandschap (eruit?). Hierbij maak je gebruik van gevestigde standaarden en ontwerpprincipes binnen de industrie en ontwijk je actief valkuilen bij het schrijven van de software. Dit doe je onder andere door iteratief je software te ontwikkelen en refactoringstechnieken te gebruiken.\nJe werkt hierbij aan de eindkwalificaties software realiseren.\n\nBOKS:\nProgrammeren \"\"C# (incl externe certificering?)\nObjectogeoriënteerd\nDesign patterns\nState diagrams???\nInterfaces (code)"
-                }
-            ]
-        },
-        {
-            "code": "3.1-3.2",
-            "naam": "Stage",
-            "periodes": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Stage",
-                    "studiepunten": 30,
-                    "omschrijving": "In de stage laat je zien dat je de kennis, vaardigheden en houdingsaspecten hebt om als collega binnen een organisatie te functioneren. Je werkt hierbij aan een softwareoplossing voor een automatiseringsvraagstuk binnen het vakgebied van Informatica, verstrekt door de organisatie waar je stage loopt.\n- Voor dit traject maak je een persoonlijke planning en je managet deze.\n- Je werkt toe naar een goede passende oplossing voor jouw stakeholders.\n- Hierbij gebruik je jouw onderzoekend vermogen om de juiste keuzes te maken.\n- Als stagiair functioneer je als een integraal onderdeel binnen dit bedrijf.\n- Je gebruikt kritische zelfreflectie en feedback van derden om je eigen functioneren te verbeteren."
-                }
-            ]
-        },
-        {
-            "code": "3.3",
-            "naam": "Continuous X",
-            "periodes": [
-                3
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Gebruikersinteractie bij software ontwikkeling",
-                    "studiepunten": 3,
-                    "omschrijving": "Je ontwerpt de gebruikersinteractie van een te ontwikkelen softwareoplossing. Je maakt gebruik van bestaande ontwerpprincipes en adviseert jouw opdrachtgever aan de hand van meerdere keuzes . Je valideert je ontwerp bij je internationale gebruikersdoelgroepen met verschillende maatschappelijke belangen om je ontwerp te kunnen verbeteren.\n\nHierbij werk je aan de eindkwalificatie software ontwerpen."
-                },
-                {
-                    "titel": "Modulair opgebouwde software realiseren",
-                    "studiepunten": 6,
-                    "omschrijving": "Je realiseert een softwareoplossing die bestaat uit meerdere onafhankelijke modules zodat deze modules ieder onafhankelijk van elkaar op- of afgeschaald kunnen worden. Je borgt de kwaliteit door continuous integration met automatische testen in te zetten. Daarnaast zet je continuous deployment in om automatisch je verschillende omgevingen bij te werken.\nJe werkt hierbij aan de eindkwalificatie software realiseren."
-                },
-                {
-                    "titel": "Projectmatig software ontwikkelen vanuit de DevOps gedachte",
-                    "studiepunten": 6,
-                    "omschrijving": "Je ontwikkelt met een groep medestudenten projectmatig een softwareoplossing waarbij je werkt volgens een agile projectmethodiek en devops-principes. Je projectgroep is een zelforganiserend team dat volledig verantwoordelijk is voor het vervullen van de gebruikersbehoefte middels een softwareoplossing volgens de kernwaarden van de opdrachtgever uit het werkveld.\n\nJe zorgt er actief voor dat de stakeholders hun verwachtingen ten aanzien van het proces en product gewaarborgd worden.\n\nJe monitort de status van je applicatie continu zodat je snel kan anticiperen op verstoringen.\n\nHierbij werk je aan de eindkwalificatie projectmanagement."
-                }
-            ]
-        },
-        {
-            "code": "4.3-4.4",
-            "naam": "Afstuderen",
-            "periodes": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Afstuderen",
-                    "studiepunten": 30,
-                    "omschrijving": "In het afstudeertraject laat je zien dat je de kennis, vaardigheden en houdingsaspecten hebt om als startend professional binnen een organisatie te functioneren. Je werkt hierbij aan een softwareoplossing voor een complex automatiseringsvraagstuk binnen het vakgebied van Informatica, verstrekt door de organisatie waar je stage loopt.\n- Voor dit traject maak je een planning (PvA) en je managet deze.\n- Je zorgt ervoor dat een goede passende oplossing voor de stakeholders wordt gerealiseerd.\n- Hierbij gebruik je jouw onderzoekend vermogen om de juiste keuzes te maken.\n- Als afstudeerder functioneer je als een volwaardig startende medewerker binnen dit bedrijf.\n- Je bent kritisch op je eigen functioneren en werkt zelfstandig aan je afstudeeropdracht."
-                }
-            ]
-        },
-        {
-            "code": "2.3",
-            "naam": "Keuzemodule NLQF5",
-            "periodes": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Keuzemodule",
-                    "studiepunten": 15,
-                    "omschrijving": ""
-                }
-            ]
-        },
-        {
-            "code": "3.4",
-            "naam": "Keuzemodule NLQF6",
-            "periodes": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Keuzemodule",
-                    "studiepunten": 15,
-                    "omschrijving": ""
-                }
-            ]
-        },
-        {
-            "code": "4.1-4.2",
-            "naam": "Minor",
-            "periodes": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "leeruitkomsten": [
-                {
-                    "titel": "Keuzemodule",
-                    "studiepunten": 30,
-                    "omschrijving": ""
-                }
-            ]
-        }
+  "studiepaden": {
+    "Regulier": [
+      "1.1",
+      "1.2",
+      "1.3-1.4",
+      "1.3-1.4",
+      "2.1-2.2",
+      "2.1-2.2",
+      "2.3",
+      "2.4",
+      "3.1-3.2",
+      "3.1-3.2",
+      "3.3",
+      "3.4",
+      "4.1-4.2",
+      "4.1-4.2",
+      "4.3-4.4",
+      "4.3-4.4"
+    ],
+    "Associate Degree": [
+      "2.1-2.2",
+      "2.1-2.2",
+      "3.3",
+      "2.4",
+      "4.1-4.2",
+      "4.1-4.2",
+      "4.3-4.4",
+      "4.3-4.4"
+    ],
+    "Versneld": [
+      "1.1, 1.2",
+      "1.3-1.4",
+      "2.3",
+      "2.4",
+      "2.1-2.2",
+      "2.1-2.2",
+      "3.3",
+      "3.4",
+      "3.1-3.2",
+      "3.1-3.2",
+      "4.1-4.2",
+      "4.1-4.2",
+      "4.3-4.4",
+      "4.3-4.4"
+    ],
+    "Versneld met stagevrijstelling": [
+      "1.1, 1.2",
+      "1.3-1.4",
+      "2.3",
+      "2.4",
+      "2.1-2.2",
+      "2.1-2.2",
+      "3.3",
+      "3.4",
+      "4.1-4.2",
+      "4.1-4.2",
+      "4.3-4.4",
+      "4.3-4.4"
     ]
+  },
+  "modules": [
+    {
+      "code": "1.1",
+      "naam": "Een deelproces automatiseren",
+      "periodes": [
+        1
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Dataselectie en -modificatie",
+          "studiepunten": 3,
+          "omschrijving": "Je ontwikkelt een database zodat data voor een gegeven bedrijfsproces opgeslagen kan worden. Hiervoor analyseer je het universum van discussie en stel je data flow diagrammen en de bijbehorende data dictionary op.\nJe ontwerpt vervolgens hiervoor een genormaliseerd databasemodel en genereert hiervan de database rekening houdend met de basis privacy- en security aspecten.\nJe ontwikkelt ten slotte database queries om uit deze database uit te lezen en te kunnen bewerken.\n\nJe werkt hierbij aan de eindkwalificatie software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Individueel een proces automatiseren middels software.",
+          "studiepunten": 7,
+          "omschrijving": "Je automatiseert een deel van een gegeven bedrijfsproces. Hiervoor ontwerp je de applicatielogica met activiteitendiagrammen en ontwerp je middels wireframes de gebruikersinteractie.\nJe implementeert vervolgens de applicatielogica in Python en realiseert gebruikersinteractie met HTML en CSS.\nJe bekijkt hierbij de oplossingen van je medestudenten en geeft daar feedback op.\nJe denkt kritisch na over het gebruik van jouw software en test de werking van jouw product onder verschillende omstandigheden. Daarbij gebruik je ook ontvangen feedback om je software te verbeteren.\nJe werkt hierbij aan de eindkwalificatie software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Jouw positionering in de beroepspraktijk",
+          "studiepunten": 5,
+          "omschrijving": "Je onderzoekt de positie van een informaticus in verschillende organisaties, bedrijfsculturen en de samenleving als geheel. Hierbij kijk je naar de bijdrage van informatica aan de maatschappij en welke trends er zich binnen de informatica afspelen. Je beschrijft de handelingen van een softwareontwikkelaar en waartoe deze dienen. Daarbij benoem je welke kwaliteiten deze professional moet bezitten.\nJe onderzoekt jouw eigen kwaliteiten en ambities, en evalueert in welke mate deze passen bij het beroep van de softwareontwikkelaar. Vervolgens beschrijf je jouw ontwikkelbehoeftes op basis van deze evaluatie.\nJe werkt hierbij aan de eindkwalificatie persoonlijk ontwikkelen.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.2",
+      "naam": "Data- en softwareontwerp",
+      "periodes": [
+        2
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Database ontwerpen en realiseren",
+          "studiepunten": 4,
+          "omschrijving": "Je herkent de data-aspecten van een gegeven casus en vertaalt deze naar een efficiënt relationeel databasemodel. Je creëert een database door dit model te implementeren.\nUit de gegeven casus identificeer je nuttige informatiebehoeften vanuit verschillende gebruikersinteracties. Hierbij houd je rekening met privacy- en securityaspecten.\nJe werkt hierbij aan de eindkwalificaties software ontwerpen en software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Object-georiënteerd ontwerpen en realiseren",
+          "studiepunten": 7,
+          "omschrijving": "Je ontwerpt een monolithische object-georiënteerde applicatie waarbij je het ontwerp vastlegt in formele ontwerpdiagrammen.\nJe bouwt, op basis van deze ontwerpdiagrammen, de applicatie.\nJe programmeert aan de hand van geldende programmeerstandaarden en documenteert je code.\nJe test de werking van jouw applicatie onder verschillende omstandigheden.\nJe werkt hierbij aan de eindkwalificaties software ontwerpen en software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Samenwerken en communiceren bij het ontwikkelen van software",
+          "studiepunten": 4,
+          "omschrijving": "Je ontwikkelt met een groep medestudenten een softwareoplossing op basis van instructies van een projectdocent. Om tot deze oplossing te komen vergader je met je groep waarbij je vergadertechnieken inzet.\nJe herkent conflicten binnen de groep en geeft aan wat je kan doen om deze conflicten op te lossen. Je geeft je groepsleden feedback aan de hand van feedbackmodellen. Je reflecteert op je eigen gedrag in de groep, op basis van je eigen ervaringen en je ontvangen feedback, om zo je sterktes en zwaktes te herkennen en te verbeteren.\nJe werkt hier aan de eindkwalificatie professioneel handelen.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.3-1.4",
+      "naam": "De software development life cycle",
+      "periodes": [
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Probleemanalyse en Ontwerp",
+          "studiepunten": 5,
+          "omschrijving": "Je analyseert een aangereikt automatiseringsvraagstuk waarbij je de aanleiding, context, en functionele en systeemeisen helder en eenduidig in kaart brengt. Deze breng je samen in een requirementsdocument.\n\nJe vertaalt de gestelde eisen naar functioneel ontwerp waarbij je rekening houdt met het gebruik van je applicatie. Je maakt ook een technisch ontwerp middels diagrammen voor een object-georiënteerde client-server applicatie waarbij je gebruik maakt van overerving en polymorfisme.\nJe overweegt bij beiden alternatieve oplossingen.\n\nJe overweegt de impact op mens, milieu en maatschappij van de keuzes die je maakt. De keuzes die je tijdens het ontwerpen maakt verantwoord je op basis van een argumentatiemodel. Hierbij werk je aan de eindkwalificatie software ontwerpen.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Projectmatig software ontwikkelen",
+          "studiepunten": 15,
+          "omschrijving": "Je ontwikkelt met een groep medestudenten projectmatig een softwareoplossing waarbij je je houdt aan een vooraf gedefinieerde fasering en projectmethodiek. Hierbij werk je aan de eindkwalificatie projectmanagement. Je bent verantwoordelijk voor een deel van de te realiseren software en zet gedistribueerd configuratiebeheer in om de deelproducten te integreren tot een groepsproduct. Het uiteindelijke product maak je beschikbaar voor de opdrachtgever in een productieomgeving.\n\nAan de start van het project schrijf je een plan van aanpak met daarin onder andere samenwerkingsafspraken met de verdeling van de teamrollen. Je maakt daarbij ook een werkplanning.\n\nTijdens het project werk je professioneel samen met medestudenten onder begeleiding van een projectdocent. Je geeft groepsgenoten feedback en reflecteert over de voortgang van het project, je eigen bijdrage hieraan en je persoonlijke ontwikkeling. Je communiceert regelmatig op voorgeschreven wijze de groepsvoortgang aan de opdrachtgever.\n\nJe sluit het project af door het product over te dragen aan de opdrachtgever waarbij je rekening houdt met het publiek en zorgt voor een goede structuur in deze overdracht.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Software realiseren",
+          "studiepunten": 10,
+          "omschrijving": "Op basis van een functioneel en technisch ontwerp realiseer je object-georiënteerde client-server software, met overerving en polymorfisme, waarbij je gebruik maakt van Object-Relational Mapping (ORM) voor het creëren en benaderen van je relationele database waarbij je er voor zorgt dat de logica en front-end functionaliteit automatisch getest is.\nJe werkt hierbij aan de eindkwalificatie software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.1-2.2",
+      "naam": "Fullstack development",
+      "periodes": [
+        1,
+        2
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Fullstack software realiseren",
+          "studiepunten": 8,
+          "omschrijving": "Je realiseert software op basis van een functioneel en technisch ontwerp. Je ontwikkelt en documenteert programmacode. Je realiseert je software in een client/server architectuur en maakt hierbij gebruik van een relationele database. Je ontwerpt je code met het oog op goede onderhoudbaarheid.\n\nJe werkt hierbij aan de eindkwalificatie software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Projectmatig software ontwikkelen",
+          "studiepunten": 15,
+          "omschrijving": "Je ontwikkelt met een groep medestudenten projectmatig een softwareoplossing waarbij je je houdt aan een vooraf gedefinieerde fasering en projectmethodiek. Hierbij werk je aan alle eindkwalificaties (projectmanagement, analyseren/adviseren, software ontwerpen, software realiseren, software testen).\n\nAan de start van het project interview je de klant en maak je op basis daarvan een functioneel ontwerp. Bij het opstellen van de requirements neem je de belangen van alle stakeholders in overweging. Je schrijft een plan van aanpak met daarin onder andere samenwerkingsafspraken met de verdeling van de teamrollen. Je maakt daarbij ook een werkplanning.\n\nJe ontwikkelt, integreert en levert je software op aan de hand van een vooraf afgesproken ontwikkelstraat. Hierbij groeit de kwaliteit van de software aantoonbaar totdat de software in productie genomen kan worden. Speciale aandacht hierbij gaat uit testing. Het uiteindelijke product maak je beschikbaar voor de opdrachtgever in een productieomgeving.\n\nTijdens het project werk je professioneel samen met medestudenten en de externe klant, onder begeleiding van een projectdocent. Je communiceert regelmatig en proactief met de klant op een passende manier.\n\nJe geeft groepsgenoten feedback en reflecteert op de werkwijze en het proces, je eigen bijdrage hieraan en je persoonlijke ontwikkeling. Verbeterstappen die uit de reflectiemomenten komen voer je uit.\n\nJe sluit het project af door het product overtuigend over te dragen aan de opdrachtgever waarbij je rekening houdt met het publiek en zorgt voor een goede structuur in deze overdracht.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Software testen",
+          "studiepunten": 7,
+          "omschrijving": "In deze module over testen ga je aan de slag met Test Driven Development, waarbij je aan de hand van aangeleverde user stories voor een applicatie de bijbehorende acceptatiecriteria en relevante test scenario's gaat opstellen en uitwerken, zodanig dat ontwikkelaars concreet aan de gang kunnen met de implementatie van de user stories.\n\nJe zorgt ervoor dat de user stories eenduidig en volledig zijn, en dat de gebruikersflow end-to-end beschreven is, zodat je zuiver black box (functioneel) kunt testen. De testsuite die je vervolgens implementeert en oplevert, toont aan welke acceptatiecriteria succesvol zijn geïmplementeerd.\n\nNa de uitvoering van de tests op de aangeleverde applicatie, zul je de verkregen resultaten verzamelen in een rapportage, en deze mondeling toelichten, zodanig dat blijkt dat je in staat bent om testresultaten correct te interpreteren en aan de stakeholders een inhoudelijk onderbouwd advies te kunnen geven met betrekking tot de kwaliteit van de applicatie.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.4",
+      "naam": "Software architectuur",
+      "periodes": [
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Analyse van systeemarchitectuur op macro- meso-niveau",
+          "studiepunten": 4,
+          "omschrijving": "Je voert bij een beroepsspecifiek Engelssprekend bedrijf onderzoek uit naar het gebruikte applicatielandschap. Je analyseert het applicatielandschap op basis van de kwaliteitseisen die gesteld worden in ISO 25010. Vervolgens geef je jouw professionele mening over de huidige situatie. Je stelt een advies op waarbij je in het bijzonder aandacht hebt voor refactoringskansen. Dit advies draag je in het Engels schriftelijk over aan de stakeholders.\nJe werkt hierbij aan de eindkwalificaties analyseren en adviseren.\n\nBOKS:\nABV \"Adviseren\nAdviespresentatie\"\n\nDuurzame Ontwikkeling \"SDG focus op security gelinkt aan SDG 16 (vrede en veiligheid) en duurzame toekomstbestendigheid (SDG 12, duurzame productie)\"\n\nIntegration & Deployment \"Backwards compatibility. Dependency by contract. IAAS, PAAS, SAAS, FAAS\"\n\nOnderzoekend Vermogen \"Uitvoer van (klein) onderzoek:\n(Onderzoeksvragen opstellen), resultaten verzamelen, conclusie formuleren, advies uitbrengen\nKritisch alternatieven overwegen\"",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Ontwerpen en realiseren van een softwarearchitectuur op meso- micro-niveau",
+          "studiepunten": 6,
+          "omschrijving": "Je ontwerpt en realiseert een complex objectgeoriënteerd softwaresysteem met als doel die te integreren in een bestaand groter applicatielandschap. Hierbij maak je gebruik van gevestigde standaarden en ontwerpprincipes binnen de industrie en ontwijk je actief valkuilen bij het schrijven van de software. Dit doe je onder andere door iteratief je software te ontwikkelen en refactoringstechnieken te gebruiken.\n\nJe beargumenteert jouw gemaakte ontwerp- en implementatiekeuzes op basis van onderhoudbaarheid en robuustheid .\n\nJe werkt hierbij aan de eindkwalificaties software ontwerpen en software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Refactoring van code middels Design Patterns (micro-niveau)",
+          "studiepunten": 5,
+          "omschrijving": "Je ontwerpt en realiseert een complex objectgeoriënteerd softwaresysteem met als doel die te integreren in een bestaand groter applicatielandschap (eruit?). Hierbij maak je gebruik van gevestigde standaarden en ontwerpprincipes binnen de industrie en ontwijk je actief valkuilen bij het schrijven van de software. Dit doe je onder andere door iteratief je software te ontwikkelen en refactoringstechnieken te gebruiken.\nJe werkt hierbij aan de eindkwalificaties software realiseren.\n\nBOKS:\nProgrammeren \"\"C# (incl externe certificering?)\nObjectogeoriënteerd\nDesign patterns\nState diagrams???\nInterfaces (code)",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.1-3.2",
+      "naam": "Stage",
+      "periodes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Stage",
+          "studiepunten": 30,
+          "omschrijving": "In de stage laat je zien dat je de kennis, vaardigheden en houdingsaspecten hebt om als collega binnen een organisatie te functioneren. Je werkt hierbij aan een softwareoplossing voor een automatiseringsvraagstuk binnen het vakgebied van Informatica, verstrekt door de organisatie waar je stage loopt.\n- Voor dit traject maak je een persoonlijke planning en je managet deze.\n- Je werkt toe naar een goede passende oplossing voor jouw stakeholders.\n- Hierbij gebruik je jouw onderzoekend vermogen om de juiste keuzes te maken.\n- Als stagiair functioneer je als een integraal onderdeel binnen dit bedrijf.\n- Je gebruikt kritische zelfreflectie en feedback van derden om je eigen functioneren te verbeteren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.3",
+      "naam": "Continuous X",
+      "periodes": [
+        3
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Gebruikersinteractie bij software ontwikkeling",
+          "studiepunten": 3,
+          "omschrijving": "Je ontwerpt de gebruikersinteractie van een te ontwikkelen softwareoplossing. Je maakt gebruik van bestaande ontwerpprincipes en adviseert jouw opdrachtgever aan de hand van meerdere keuzes . Je valideert je ontwerp bij je internationale gebruikersdoelgroepen met verschillende maatschappelijke belangen om je ontwerp te kunnen verbeteren.\n\nHierbij werk je aan de eindkwalificatie software ontwerpen.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Modulair opgebouwde software realiseren",
+          "studiepunten": 6,
+          "omschrijving": "Je realiseert een softwareoplossing die bestaat uit meerdere onafhankelijke modules zodat deze modules ieder onafhankelijk van elkaar op- of afgeschaald kunnen worden. Je borgt de kwaliteit door continuous integration met automatische testen in te zetten. Daarnaast zet je continuous deployment in om automatisch je verschillende omgevingen bij te werken.\nJe werkt hierbij aan de eindkwalificatie software realiseren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        },
+        {
+          "titel": "Projectmatig software ontwikkelen vanuit de DevOps gedachte",
+          "studiepunten": 6,
+          "omschrijving": "Je ontwikkelt met een groep medestudenten projectmatig een softwareoplossing waarbij je werkt volgens een agile projectmethodiek en devops-principes. Je projectgroep is een zelforganiserend team dat volledig verantwoordelijk is voor het vervullen van de gebruikersbehoefte middels een softwareoplossing volgens de kernwaarden van de opdrachtgever uit het werkveld.\n\nJe zorgt er actief voor dat de stakeholders hun verwachtingen ten aanzien van het proces en product gewaarborgd worden.\n\nJe monitort de status van je applicatie continu zodat je snel kan anticiperen op verstoringen.\n\nHierbij werk je aan de eindkwalificatie projectmanagement.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4.3-4.4",
+      "naam": "Afstuderen",
+      "periodes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Afstuderen",
+          "studiepunten": 30,
+          "omschrijving": "In het afstudeertraject laat je zien dat je de kennis, vaardigheden en houdingsaspecten hebt om als startend professional binnen een organisatie te functioneren. Je werkt hierbij aan een softwareoplossing voor een complex automatiseringsvraagstuk binnen het vakgebied van Informatica, verstrekt door de organisatie waar je stage loopt.\n- Voor dit traject maak je een planning (PvA) en je managet deze.\n- Je zorgt ervoor dat een goede passende oplossing voor de stakeholders wordt gerealiseerd.\n- Hierbij gebruik je jouw onderzoekend vermogen om de juiste keuzes te maken.\n- Als afstudeerder functioneer je als een volwaardig startende medewerker binnen dit bedrijf.\n- Je bent kritisch op je eigen functioneren en werkt zelfstandig aan je afstudeeropdracht.",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.3",
+      "naam": "Keuzemodule NLQF5",
+      "periodes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Keuzemodule",
+          "studiepunten": 15,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.4",
+      "naam": "Keuzemodule NLQF6",
+      "periodes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Keuzemodule",
+          "studiepunten": 15,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4.1-4.2",
+      "naam": "Minor",
+      "periodes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Keuzemodule",
+          "studiepunten": 30,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            {
+              "titel": "Lorem ipsum dolor sit amet consectetur"
+            },
+            {
+              "titel": "Adipiscing elit sed do eiusmod tempor"
+            },
+            {
+              "titel": "Incididunt ut labore et dolore magna"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -1,11 +1,18 @@
+export interface Toetsonderdeel {
+    titel: string;
+}
+
 export interface Outcome {
     name: string;
     studiepunten: number;
     qualification: string;
     description: string;
+    toetsonderdelen?: Toetsonderdeel[];
     titel?: string;
     omschrijving?: string;
 }
+
+export type ToetsonderdeelState = 'checked' | 'unchecked' | 'vervallen';
 
 export interface Module {
     code: string;

@@ -13,7 +13,8 @@ export function parseJSON(data: any) {
                 name: lu.titel || '',
                 studiepunten: lu.studiepunten || 0,
                 qualification: qm ? qm[1].replace(/\s+en\s+/g, ', ').trim() : '',
-                description: lu.omschrijving || ''
+                description: lu.omschrijving || '',
+                toetsonderdelen: lu.toetsonderdelen || []
             };
         });
         return { code, name, naam: name, jaar, periodes, outcomes };

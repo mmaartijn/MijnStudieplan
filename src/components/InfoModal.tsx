@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { CurriculumData } from '@/lib/types';
+import { CurriculumData, ToetsonderdeelState } from '@/lib/types';
 
 interface InfoModalProps {
     code: string;
@@ -7,21 +7,20 @@ interface InfoModalProps {
     curriculum: CurriculumData;
     achieved: Set<string>;
     toggleAchieved: (code: string, idx: number) => void;
+    toetsonderdeelStates: Map<string, ToetsonderdeelState>;
+    toggleToetsonderdeel: (key: string) => void;
     onClose: () => void;
 }
 
-export default function InfoModal({ code, highlightIdx, curriculum, achieved, toggleAchieved, onClose }: InfoModalProps) {
+export default function InfoModal({ code, highlightIdx, curriculum, achieved, toggleAchieved, toetsonderdeelStates, toggleToetsonderdeel, onClose }: InfoModalProps) {
     const mod = curriculum.modules.find(m => m.code === code);
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Scroll highlighted item into view
         if (highlightIdx !== undefined && containerRef.current) {
             setTimeout(() => {
                 const el = containerRef.current?.querySelector('.highlighted');
-                if (el) {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 50);
         }
     }, [highlightIdx]);
@@ -53,11 +52,12 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                         const isAchieved = achieved.has(`${code}|${i}`);
 
                         return (
-                            <label
+                            <div
                                 key={i}
-                                className={`block border rounded-radius p-4 transition-all cursor-pointer ${isHighlighted ? 'highlighted border-primary bg-primary-light shadow-[0_0_0_2px_var(--color-primary-light)]' : 'border-border-subtle bg-bg-app hover:border-gray-300 hover:shadow-sm'}`}
+                                className={`block border rounded-radius p-4 transition-all ${isHighlighted ? 'highlighted border-primary bg-primary-light shadow-[0_0_0_2px_var(--color-primary-light)]' : 'border-border-subtle bg-bg-app'}`}
                             >
-                                <div className="flex justify-between items-baseline mb-2">
+                                {/* Header: naam + EC + vinkje leeruitkomst */}
+                                <div className="flex justify-between items-baseline mb-3">
                                     <div className="flex items-center gap-2.5">
                                         <input
                                             type="checkbox"
@@ -70,8 +70,47 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                                     <span className="text-[0.8rem] font-bold bg-primary-light text-primary rounded-[10px] px-2 py-[1px] whitespace-nowrap">{o.studiepunten} EC</span>
                                 </div>
 
+                                {/* Toetsonderdelen */}
+                                {o.toetsonderdelen && o.toetsonderdelen.length > 0 && (
+                                    <div className="mb-3 p-3 bg-card rounded border border-border-subtle">
+                                        <p className="text-[0.72rem] font-semibold text-muted uppercase tracking-wide mb-2">Toetsonderdelen</p>
+                                        <div className="flex flex-col gap-1">
+                                            {o.toetsonderdelen.map((t, ti) => {
+                                                const toKey = `${code}|${i}|${ti}`;
+                                                const state: ToetsonderdeelState = toetsonderdeelStates.get(toKey) ?? 'unchecked';
+                                                const isChecked = state === 'checked';
+                                                const isVervallen = state === 'vervallen';
+
+                                                return (
+                                                    <label
+                                                        key={ti}
+                                                        className="flex items-center gap-2 py-[3px] cursor-pointer group"
+                                                        onClick={() => toggleToetsonderdeel(toKey)}
+                                                    >
+                                                        <span className={`w-4 h-4 rounded shrink-0 border flex items-center justify-center text-[0.7rem] transition-colors
+                                                            ${isVervallen ? 'bg-orange-100 border-orange-400 text-orange-600' :
+                                                              isChecked  ? 'bg-[var(--color-success)] border-[var(--color-success)] text-white' :
+                                                                           'border-border-subtle bg-white group-hover:border-primary'}`}
+                                                        >
+                                                            {isChecked && '✓'}
+                                                            {isVervallen && '!'}
+                                                        </span>
+                                                        <span className={`text-[0.88rem] leading-snug ${isVervallen ? 'line-through text-muted' : 'text-text-main'}`}>
+                                                            {t.titel}
+                                                        </span>
+                                                        {isVervallen && (
+                                                            <span className="text-[0.75rem] text-orange-600 font-medium whitespace-nowrap">vervalt</span>
+                                                        )}
+                                                    </label>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Beschrijving */}
                                 <div className="text-[0.9rem] leading-[1.6] text-text-main" dangerouslySetInnerHTML={{ __html: (o.description || 'Geen uitgebreide omschrijving beschikbaar.').replace(/\n/g, '<br>') }} />
-                            </label>
+                            </div>
                         );
                     })}
                 </div>
@@ -79,14 +118,13 @@ export default function InfoModal({ code, highlightIdx, curriculum, achieved, to
                 <div className="border-t border-border-subtle p-4 flex justify-end">
                     <button
                         onClick={onClose}
-                        className="px-5 py-2 text-[0.9rem] font-medium border border-border-subtle rounded bg-card text-text-main hover:bg-bg-app transition-colors"
+                        className="px-5 py-2 text-[0.9rem] font-medium border border-border-subtle rounded bg-card text-text-main hover:bg-bg-app transition-colors cursor-pointer"
                     >
                         Sluiten
                     </button>
                 </div>
             </div>
 
-            {/* Backdrop */}
             <div className="absolute inset-0 -z-10" onClick={onClose}></div>
         </div>
     );

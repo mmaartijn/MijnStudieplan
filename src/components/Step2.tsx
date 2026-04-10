@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { CurriculumData, PlanGrid } from '@/lib/types';
+import { CurriculumData, PlanGrid, ToetsonderdeelState } from '@/lib/types';
 import InfoModal from './InfoModal';
 import { distributeItemsByStudiepad } from '@/lib/utils';
 interface Step2Props {
@@ -14,10 +14,12 @@ interface Step2Props {
     setCommentOpen: Dispatch<SetStateAction<Set<string>>>;
     numYears: number;
     setNumYears: Dispatch<SetStateAction<number>>;
+    toetsonderdeelStates: Map<string, ToetsonderdeelState>;
+    toggleToetsonderdeel: (key: string) => void;
 }
 
 export default function Step2({
-    curriculum, selectedPad, setSelectedPad, planGrid, setPlanGrid, achieved, setAchieved, commentOpen, setCommentOpen, numYears, setNumYears
+    curriculum, selectedPad, setSelectedPad, planGrid, setPlanGrid, achieved, setAchieved, commentOpen, setCommentOpen, numYears, setNumYears, toetsonderdeelStates, toggleToetsonderdeel
 }: Step2Props) {
 
     const [draggedItem, setDraggedItem] = useState<{ code: string, idx: number, fromKey: string } | null>(null);
@@ -279,6 +281,8 @@ export default function Step2({
                     curriculum={curriculum}
                     achieved={achieved}
                     toggleAchieved={toggleAchieved}
+                    toetsonderdeelStates={toetsonderdeelStates}
+                    toggleToetsonderdeel={toggleToetsonderdeel}
                     onClose={() => setInfoModalItem(null)}
                 />
             )}
