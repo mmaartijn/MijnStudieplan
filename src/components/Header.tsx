@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { BASE_PATH } from '@/lib/constants';
 
 interface HeaderProps {
     backLabel?: string;
@@ -16,7 +17,7 @@ export default function Header({ backLabel, backHref, onBack, showActions, onSav
             <div className="max-w-[1140px] mx-auto flex items-center justify-between gap-6 flex-wrap">
                 <div className="flex items-center gap-4 flex-wrap">
                     <div className="flex items-center gap-2.5">
-                        <Image src="/ATD-small.png" alt="ATD logo" width={36} height={36} className="object-contain" />
+                        <Image src={`${BASE_PATH}/ATD-small.png`} alt="ATD logo" width={36} height={36} className="object-contain" />
                         <h1 className="text-xl font-bold text-success whitespace-nowrap">Mijn Studieplan</h1>
                     </div>
                     {backLabel && backHref && (

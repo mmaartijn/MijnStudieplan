@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
 import OpleidingClient from './OpleidingClient';
-
-// Respect the basePath that next.config.ts sets for GitHub Pages deployments.
-const BASE_PATH = process.env.GITHUB_PAGES === 'true' ? '/MijnStudieplan' : '';
+import { BASE_PATH } from '@/lib/constants';
 
 const OPLEIDING_MAP: Record<string, { displayName: string; jsonUrl: string }> = {
     ict: {

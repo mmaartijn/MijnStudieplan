@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { BASE_PATH } from "@/lib/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Mijn Studieplan",
   description: "Een tool om je persoonlijk studieplan samen te stellen.",
+  icons: {
+    icon: `${BASE_PATH}/ATD-small.ico`,
+  },
 };
 
 export default function RootLayout({
