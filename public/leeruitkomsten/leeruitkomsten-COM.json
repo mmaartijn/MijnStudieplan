@@ -1,0 +1,532 @@
+{
+  "naamOpleiding": "Communicatie",
+  "studiepaden": {
+    "Regulier": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "2.1-2.2",
+      "2.1-2.2",
+      "2.3",
+      "2.4",
+      "3.1-3.2",
+      "3.1-3.2",
+      "3.3",
+      "3.4",
+      "4.1",
+      "4.2",
+      "4.3-4.4",
+      "4.3-4.4"
+    ]
+  },
+  "modules": [
+    {
+      "code": "1.1",
+      "naam": "De creërende professional",
+      "moduleCode": "M49126-01",
+      "periodes": [
+        1
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Adviseren",
+          "studiepunten": 5,
+          "omschrijving": "Je demonstreert begrip van jouw adviseursrol als communicatieprofessional en past dit toe in een adviesgesprek met een opdrachtgever.",
+          "toetsonderdelen": [
+            {
+              "titel": "Adviseren Show & Tell",
+              "vorm": "Mondelinge toets"
+            }
+          ]
+        },
+        {
+          "titel": "Inleiding Communicatie",
+          "studiepunten": 5,
+          "omschrijving": "Binnen het communicatiedomein demonstreer je begrip van de basisconcepten en -theorieën van communicatie en past dit toe in een praktijksituatie.",
+          "toetsonderdelen": [
+            {
+              "titel": "Inleiding Communicatie",
+              "vorm": "Geroosterde digitale kennistoets (aparte LU)"
+            }
+          ]
+        },
+        {
+          "titel": "Vormgeving en creatie",
+          "studiepunten": 5,
+          "omschrijving": "Je onderzoekt en beantwoordt een communicatievraagstuk met een visueel en creatief product, waarbij je ontwerpprincipes toepast.",
+          "toetsonderdelen": [
+            {
+              "titel": "Portfolio Vormgeving en Creatie",
+              "vorm": "Beoordelings-portfolio"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.2",
+      "naam": "De marketing-communicatieprofessional",
+      "moduleCode": "M46452-01",
+      "periodes": [
+        2
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Het marketing-communicatieplan",
+          "studiepunten": 5,
+          "omschrijving": "Je ontwikkelt een marketing-communicatieplan voor een opdrachtgever, waarbij je de marketingmix en communicatiestrategie toepast.",
+          "toetsonderdelen": [
+            {
+              "titel": "Marketing-communicatieplan",
+              "vorm": "Presentatie"
+            }
+          ]
+        },
+        {
+          "titel": "Omgevings- en doelgroepanalyse",
+          "studiepunten": 5,
+          "omschrijving": "Je voert een omgevings- en doelgroepanalyse uit voor een communicatievraagstuk en presenteert de bevindingen mondeling.",
+          "toetsonderdelen": [
+            {
+              "titel": "Omgevings- en doelgroepanalyse",
+              "vorm": "Mondelinge toets"
+            }
+          ]
+        },
+        {
+          "titel": "PI: Ik als communicatieprofessional",
+          "studiepunten": 5,
+          "omschrijving": "Je reflecteert op jouw professionele identiteit als communicatieprofessional en presenteert dit in een audiovisueel product.",
+          "toetsonderdelen": [
+            {
+              "titel": "PI: Ik als communicatieprofessional",
+              "vorm": "Audiovisuele opdracht"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.3",
+      "naam": "De Startende Gedragsbeïnvloeder",
+      "moduleCode": "M75265-01",
+      "periodes": [
+        3
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 De gedragsonderzoeker",
+          "studiepunten": 7,
+          "omschrijving": "Je voert een gedragsonderzoek uit en ontwerpt een communicatie-interventie gericht op gedragsbeïnvloeding.",
+          "toetsonderdelen": [
+            {
+              "titel": "Verantwoording (Groep)",
+              "vorm": "Verantwoordingsverslag"
+            },
+            {
+              "titel": "Ontwerp t.b.v. Gedragsbeïnvloeding (individueel)",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "CGI",
+              "vorm": "Criteriumgericht interview"
+            }
+          ]
+        },
+        {
+          "titel": "LU2 De Gedragsexpert in Woord en Beeld",
+          "studiepunten": 5,
+          "omschrijving": "Je toont kennis van gedragspsychologie en communicatietheorieën en past deze toe in woord en beeld.",
+          "toetsonderdelen": [
+            {
+              "titel": "Gedragsexpert in Woord en Beeld",
+              "vorm": "Geroosterde digitale inzichttoets"
+            }
+          ]
+        },
+        {
+          "titel": "LU3 Gedragskennis en Communicatie",
+          "studiepunten": 3,
+          "omschrijving": "Je demonstreert inzicht in de relatie tussen gedragskennis en communicatie.",
+          "toetsonderdelen": [
+            {
+              "titel": "Gedragskennis en Communicatie",
+              "vorm": "Geroosterde digitale inzichttoets"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.4",
+      "naam": "De Communicatiespecialist in Gedragsbeïnvloeding",
+      "moduleCode": "M17033-01",
+      "periodes": [
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 De gedragsbeïnvloeder",
+          "studiepunten": 5,
+          "omschrijving": "Je ontwikkelt en verantwoordt een aanpak tot gedragsbeïnvloeding voor een opdrachtgever.",
+          "toetsonderdelen": [
+            {
+              "titel": "Aanpak tot gedragsbeïnvloeding (groep)",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "Verantwoording (individueel)",
+              "vorm": "Verantwoordingsverslag"
+            },
+            {
+              "titel": "CGI (individueel)",
+              "vorm": "Criteriumgericht interview"
+            }
+          ]
+        },
+        {
+          "titel": "LU2 De Creatieve Veranderaar",
+          "studiepunten": 5,
+          "omschrijving": "Je ontwerpt een creatieve communicatieaanpak die bijdraagt aan gedragsverandering.",
+          "toetsonderdelen": [
+            {
+              "titel": "Aanpak tot gedragsbeïnvloeding",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "CGI",
+              "vorm": "Criteriumgericht interview"
+            }
+          ]
+        },
+        {
+          "titel": "LU3 PI: De verkennende communicatiespecialist",
+          "studiepunten": 5,
+          "omschrijving": "Je verkent jouw rol als communicatiespecialist en reflecteert op jouw professionele identiteit.",
+          "toetsonderdelen": [
+            {
+              "titel": "Inzicht",
+              "vorm": "Presentatie"
+            },
+            {
+              "titel": "Verantwoording en reflectie",
+              "vorm": "Criteriumgericht interview"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.1-2.2",
+      "naam": "Stage: Interne communicatie & verandering in de praktijk",
+      "moduleCode": "M92191-01",
+      "periodes": [
+        1,
+        2
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Meewerken",
+          "studiepunten": 15,
+          "omschrijving": "Je werkt mee in een professionele omgeving en toont aan dat je als communicatieprofessional kunt functioneren.",
+          "toetsonderdelen": [
+            {
+              "titel": "Assessment",
+              "vorm": "Criteriumgericht interview"
+            },
+            {
+              "titel": "Stageportfolio",
+              "vorm": "Beoordelings-portfolio"
+            }
+          ]
+        },
+        {
+          "titel": "LU2 Interne communicatie & verandering",
+          "studiepunten": 10,
+          "omschrijving": "Je analyseert en adviseert over interne communicatie en veranderingsprocessen binnen een organisatie.",
+          "toetsonderdelen": [
+            {
+              "titel": "Adviesrapport",
+              "vorm": "Schriftelijke opdracht"
+            }
+          ]
+        },
+        {
+          "titel": "LU3 Professionele Identiteit",
+          "studiepunten": 5,
+          "omschrijving": "Je reflecteert op jouw professionele identiteit en ontwikkeling tijdens de stage.",
+          "toetsonderdelen": [
+            {
+              "titel": "PI Reflectieverslag",
+              "vorm": "Reflectieverslag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.4",
+      "naam": "De communicatieregisseur",
+      "moduleCode": "M20806-01",
+      "periodes": [
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "De Projectmanager",
+          "studiepunten": 5,
+          "omschrijving": "Je managet een communicatieproject van begin tot eind en verantwoordt de aanpak en resultaten.",
+          "toetsonderdelen": [
+            {
+              "titel": "Projectplan (groep)",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "Eindpresentatie (groep)",
+              "vorm": "Presentatie"
+            },
+            {
+              "titel": "Eindrapportage (groep)",
+              "vorm": "Verantwoordingsverslag"
+            },
+            {
+              "titel": "Voortgangsrapportages incl. peerfeedback (individueel)",
+              "vorm": "Verantwoordingsverslag"
+            }
+          ]
+        },
+        {
+          "titel": "De Taalvaardige professional",
+          "studiepunten": 5,
+          "omschrijving": "Je communiceert professioneel in zowel het Nederlands als het Engels in verschillende beroepscontexten.",
+          "toetsonderdelen": [
+            {
+              "titel": "Nederlands",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "Engels inzichttoets",
+              "vorm": "Geroosterde digitale inzichttoets"
+            },
+            {
+              "titel": "Engels Assessment en verdediging",
+              "vorm": "Presentatie"
+            },
+            {
+              "titel": "Nederlands Beroepsproducten",
+              "vorm": "Beoordelings-portfolio"
+            },
+            {
+              "titel": "Engels portfolio",
+              "vorm": "Beoordelings-portfolio"
+            }
+          ]
+        },
+        {
+          "titel": "De Wendbare professional",
+          "studiepunten": 5,
+          "omschrijving": "Je toont aan dat je wendbaar bent als professional en kunt omgaan met veranderende omstandigheden in een beroepscontext.",
+          "toetsonderdelen": [
+            {
+              "titel": "Portfolio, inclusief persoonlijk reflectieverslag",
+              "vorm": "Reflectieverslag"
+            },
+            {
+              "titel": "Assessment met rollenspel",
+              "vorm": "Practicum met live observatie"
+            },
+            {
+              "titel": "Één-op-éénfeedback",
+              "vorm": "Reflectieverslag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.1-3.2",
+      "naam": "Minor",
+      "periodes": [
+        1,
+        2
+      ],
+      "leeruitkomsten": []
+    },
+    {
+      "code": "3.3",
+      "naam": "De Beeldvormer",
+      "moduleCode": "M69309-01",
+      "periodes": [
+        3
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Communicatie van binnen naar buiten",
+          "studiepunten": 3,
+          "omschrijving": "De student kan laten zien dat hij of zij begrijpt hoe identiteit, imago, reputatie en corporate branding samenhangen. Daarbij kan de student bestaande modellen gebruiken om de positionering van een organisatie te analyseren en uitleggen hoe deze zich verhoudt tot de missie, visie, kernwaarden, purpose, stakeholders en beeldvorming.",
+          "toetsonderdelen": [
+            {
+              "titel": "Open boek tentamen",
+              "vorm": "Geroosterde digitale kennistoets (aparte LU)"
+            }
+          ]
+        },
+        {
+          "titel": "Merkpaspoort",
+          "studiepunten": 6,
+          "omschrijving": "De student ontwerpt een authentiek merkpaspoort op basis van een analyse van identiteit, imago, reputatie en stakeholderbehoeften. De student vertaalt organisatiestrategie naar concrete communicatie en presenteert dit merkpaspoort op overtuigende wijze.",
+          "toetsonderdelen": [
+            {
+              "titel": "Merkpaspoort",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "Presentatie",
+              "vorm": "Presentatie"
+            }
+          ]
+        },
+        {
+          "titel": "Proces en persoon in beeld",
+          "studiepunten": 6,
+          "omschrijving": "De student ontwerpt en onderbouwt een herhaalbare werkvorm voor een opdrachtgever, waarbij stakeholders actief betrokken zijn. Het proces is navolgbaar in beeld gebracht als basis voor een professionele profilering.",
+          "toetsonderdelen": [
+            {
+              "titel": "Procesvideo",
+              "vorm": "Audiovisuele opdracht"
+            },
+            {
+              "titel": "Creatieve werkvorm",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.4",
+      "naam": "De Omgevingsverbinder",
+      "moduleCode": "M93061-01",
+      "periodes": [
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "De Bruggenbouwer",
+          "studiepunten": 5,
+          "omschrijving": "Je handelt proactief en empathisch in een politiek-bestuurlijke context vanuit een verbindende, onbevooroordeelde houding. Je maakt onderscheid met standpunten. Je analyseert signalen uit de maatschappij. Je bent wendbaar. Je communiceert krachtig en zelfbewust, neemt de regie, maar bent ondersteunend of minder aanwezig waar de situatie daarom vraagt. Je weet constructief samen te werken en een gedeeld resultaat te realiseren, waarbij je een kritische houding en ethische standaarden hanteert. Je communiceert hier helder en overtuigend over in een woordvoeringslijn.",
+          "toetsonderdelen": [
+            {
+              "titel": "Beroepsgesprek",
+              "vorm": "Practicum met live observatie"
+            },
+            {
+              "titel": "Dossier",
+              "vorm": "Beoordelings-portfolio"
+            }
+          ]
+        },
+        {
+          "titel": "De Gesprekspartner",
+          "studiepunten": 3,
+          "omschrijving": "Je kunt in een politiek-bestuurlijke omgeving actief deelnemen aan overleg en daarbij de werking van het (landelijk en regionale) politieke systeem en de fasen van het plan- tot realisatieproces duiden, doordat je bekend bent met de terminologie en thema's. Je analyseert casussen van semipublieke en private organisaties, benoemt trends en issues en herkent de dynamiek van media en de invloed daarvan op reputatie en opinievorming. Daarbij betrek je relevante wet- en regelgeving, waaronder de Omgevingswet.",
+          "toetsonderdelen": [
+            {
+              "titel": "Remindo-toets",
+              "vorm": "Geroosterde schriftelijke kennistoets (aparte LU)"
+            }
+          ]
+        },
+        {
+          "titel": "De Omgevingsregisseur",
+          "studiepunten": 7,
+          "omschrijving": "De student ontwikkelt een verbetervoorstel voor een stakeholderstrategie op basis van de evaluatie van de communicatie bij een omgevingsvraagstuk, die aantoonbaar tot stand komt via dialoog en participatie met relevante stakeholders, aansluit bij de doelstellingen van een (of enkele) van de betrokken organisaties en rekening houdt met contextfactoren zoals wet- en regelgeving, bestuurlijke verhoudingen, maatschappelijke frames en duurzaamheid. Hiervoor voert de student een stakeholderanalyse en issue-analyse uit, interpreteert belangen en machtsverhoudingen en past passende participatievormen toe met oog voor mutual gains (gezamenlijke belangen).",
+          "toetsonderdelen": [
+            {
+              "titel": "Audio-visueel verslag",
+              "vorm": "Audiovisuele opdracht"
+            },
+            {
+              "titel": "Verantwoordingsverslag",
+              "vorm": "Verantwoordingsverslag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4.1",
+      "naam": "Keuzeruimte NLQF6",
+      "periodes": [
+        1
+      ],
+      "leeruitkomsten": []
+    },
+    {
+      "code": "4.2",
+      "naam": "Traineeship",
+      "moduleCode": "M76299-01",
+      "periodes": [
+        2
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Implementatieplan",
+          "studiepunten": 10,
+          "omschrijving": "Je realiseert duurzame en bruikbare oplossingen/interventies voor de (middel)lange termijn voor de opdrachtgever. Je houdt hierbij rekening met maatschappelijke, ethische, economische (kosten/opbrengsten) en milieuaspecten.",
+          "toetsonderdelen": [
+            {
+              "titel": "Implementatieplan",
+              "vorm": "Beroepsproduct (digitaal inleveren)"
+            },
+            {
+              "titel": "CGI",
+              "vorm": "Criteriumgericht interview"
+            }
+          ]
+        },
+        {
+          "titel": "Projectplan",
+          "studiepunten": 5,
+          "omschrijving": "Je managet je werkzaamheden en proces als zelfsturende professional. Je aanpak leidt tot betrokkenheid met stakeholders en je creëert draagvlak in een complexe/dynamische context. Je voert regie op de uitvoering en legt regelmatig rekenschap af voor je handelen en het bereiken van doelen.",
+          "toetsonderdelen": [
+            {
+              "titel": "Projectplan",
+              "vorm": "Beoordelings-portfolio"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4.3-4.4",
+      "naam": "Afstudeerstage - de junior communicatieprofessional",
+      "moduleCode": "M82777-01",
+      "periodes": [
+        3,
+        4
+      ],
+      "leeruitkomsten": [
+        {
+          "titel": "Communicatiestrategie",
+          "studiepunten": 15,
+          "omschrijving": "Ontwikkelen van een passende communicatiestrategie inclusief implementatie Plan Iteratief/kortcyclisch.​ Meerdere opdrachten in meerdere contexten.​ Minimaal 1 opdracht strategische-tactisch.",
+          "toetsonderdelen": []
+        },
+        {
+          "titel": "Professionele Identiteit",
+          "studiepunten": 5,
+          "omschrijving": "De student reflecteert op zijn/haar functioneren tijdens het uitvoeren van de afstudeeropdracht.",
+          "toetsonderdelen": []
+        },
+        {
+          "titel": "Verbinden & Begeleiden",
+          "studiepunten": 10,
+          "omschrijving": "Verbinden en begeleiden & Zorgen voor draagvlak Plan Iteratief/kortcyclisch.​ Meerdere opdrachten in meerdere contexten.​ Minimaal 1 opdracht strategische-tactisch.",
+          "toetsonderdelen": []
+        }
+      ]
+    }
+  ]
+}

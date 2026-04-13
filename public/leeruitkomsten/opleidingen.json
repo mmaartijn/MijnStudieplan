@@ -1,4 +1,14 @@
 [
-  { "code": "ICT", "displayName": "ICT - Informatica" },
-  { "code": "CMD", "displayName": "CMD - Communication & Multimedia Design" }
+  {
+    "code": "ICT",
+    "displayName": "ICT - Informatica"
+  },
+  {
+    "code": "CMD",
+    "displayName": "CMD - Communication & Multimedia Design"
+  },
+  {
+    "code": "COM",
+    "displayName": "COM - Communicatie"
+  }
 ]
