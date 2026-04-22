@@ -15,6 +15,10 @@ const OPLEIDING_MAP: Record<string, { displayName: string; jsonUrl: string }> = 
         displayName: 'COM — Communicatie',
         jsonUrl: `${BASE_PATH}/leeruitkomsten/Leeruitkomsten-COM.json`,
     },
+    wtb: {
+        displayName: 'WTB — Werktuigbouwkunde',
+        jsonUrl: `${BASE_PATH}/leeruitkomsten/Leeruitkomsten-WTB.json`,
+    },
 };
 
 export function generateStaticParams() {

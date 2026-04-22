@@ -10,5 +10,9 @@
   {
     "code": "COM",
     "displayName": "COM - Communicatie"
+  },
+  {
+    "code": "WTB",
+    "displayName": "WTB - Werktuigbouwkunde"
   }
 ]

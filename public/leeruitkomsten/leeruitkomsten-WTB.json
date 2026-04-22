@@ -1,0 +1,330 @@
+{
+  "naamOpleiding": "B Werktuigbouwkunde",
+  "studiepaden": {
+    "Regulier": [
+      "1.1", "1.2", "1.3", "1.4",
+      "2.1", "2.2", "2.3", "2.4",
+      "3.1-3.2", "3.1-3.2", "3.3", "3.4",
+      "4.1-4.2", "4.1-4.2", "4.3-4.4", "4.3-4.4"
+    ]
+  },
+  "modules": [
+    {
+      "code": "1.1",
+      "naam": "WTB 1.1 Machinerevisie",
+      "moduleCode": "M22339-03",
+      "periodes": [1],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Revisiedossier",
+          "studiepunten": 7,
+          "omschrijving": "Machinerevisie",
+          "toetsonderdelen": [
+            { "titel": "TO4 Revisiedossier", "vorm": "Beroepsproduct (digitaal inleveren)" },
+            { "titel": "TO3 Casustoets", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO1 VCA Tech-lab", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO2 Tech-lab basisvaardigheden", "vorm": "Practicum met live observatie" }
+          ]
+        },
+        {
+          "titel": "LU2 Tekeningenpakket",
+          "studiepunten": 4,
+          "omschrijving": "Tekeningenpakket maken",
+          "toetsonderdelen": [
+            { "titel": "TO1 Tekeningenpakket", "vorm": "Criteriumgericht interview" }
+          ]
+        },
+        {
+          "titel": "LU3 Krachtenanalyse",
+          "studiepunten": 4,
+          "omschrijving": "Maken van een krachtenanalyse",
+          "toetsonderdelen": [
+            { "titel": "TO1 Tentamen krachtenanalyse", "vorm": "Geroosterde schriftelijke inzichttoets" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.2",
+      "naam": "WTB 1.2 XYZ-Manipulator",
+      "moduleCode": "M74661-03",
+      "periodes": [2],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Conceptkeuze",
+          "studiepunten": 6,
+          "omschrijving": "Een conceptkeuze maken van een koppeling",
+          "toetsonderdelen": [
+            { "titel": "TO1 Technisch Ontwerpdossier", "vorm": "Beoordelings-portfolio" }
+          ]
+        },
+        {
+          "titel": "LU2 Tekeningenpakket",
+          "studiepunten": 5,
+          "omschrijving": "Tekeningenpakket maken van koppeling",
+          "toetsonderdelen": [
+            { "titel": "TO1 CSWA toets", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO2 Tekeningenpakket CGI", "vorm": "Criteriumgericht interview" }
+          ]
+        },
+        {
+          "titel": "LU3 Toegepaste WTB",
+          "studiepunten": 4,
+          "omschrijving": "Kennis van werktuigonderdelen en mechanica gebruiken om casus op te lossen",
+          "toetsonderdelen": [
+            { "titel": "TO1 Tentamen Wiskunde", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO3 Tentamen Mechanica", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO2 Tentamen Werktuigonderdelen", "vorm": "Geroosterde schriftelijke inzichttoets" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.3",
+      "naam": "WTB 1.3 Zonnecollector (Deel 1)",
+      "moduleCode": "M10706-03",
+      "periodes": [3],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Realisatie van de constructie",
+          "studiepunten": 5,
+          "omschrijving": "Bouwen constructie",
+          "toetsonderdelen": [
+            { "titel": "TO1 Zonnecollector realisatie", "vorm": "Beoordelings-portfolio" }
+          ]
+        },
+        {
+          "titel": "LU2 Aandrijven en besturen",
+          "studiepunten": 5,
+          "omschrijving": "Aandrijving en Besturing",
+          "toetsonderdelen": [
+            { "titel": "TO1 Portfolio aandrijven en besturen", "vorm": "Beoordelings-portfolio" }
+          ]
+        },
+        {
+          "titel": "LU3 Energetische evaluatie",
+          "studiepunten": 5,
+          "omschrijving": "Energetisch Testrapport",
+          "toetsonderdelen": [
+            { "titel": "TO1 Tentamen Stromingsleer en Pompen", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO2 Tentamen Warmtetransport", "vorm": "Geroosterde schriftelijke inzichttoets" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1.4",
+      "naam": "WTB 1.4 Zonnecollector (Deel 2)",
+      "moduleCode": "M83446-03",
+      "periodes": [4],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Projectbeheer en re-design",
+          "studiepunten": 5,
+          "omschrijving": "Projectbeheer en re-design van zonnecollector",
+          "toetsonderdelen": [
+            { "titel": "TO1 Technisch ontwerpdossier zonnecollector", "vorm": "Beroepsproduct (digitaal inleveren)" },
+            { "titel": "TO2 Zonnecollector CGI", "vorm": "Criteriumgericht interview" }
+          ]
+        },
+        {
+          "titel": "LU2 FEM-Rapport",
+          "studiepunten": 5,
+          "omschrijving": "Het maken van een FEM-Rapport",
+          "toetsonderdelen": [
+            { "titel": "TO1 CGI FEM-rapport", "vorm": "Criteriumgericht interview" },
+            { "titel": "TO2 Tentamen wiskunde", "vorm": "Geroosterde schriftelijke inzichttoets" }
+          ]
+        },
+        {
+          "titel": "LU3 PPO",
+          "studiepunten": 5,
+          "omschrijving": "Persoonlijke en professionele ontwikkeling",
+          "toetsonderdelen": [
+            { "titel": "TO1 CGI professionaliseren", "vorm": "Criteriumgericht interview" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.1",
+      "naam": "WTB 2.1 Product Automatisering 1",
+      "moduleCode": "M84834-02",
+      "periodes": [1],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Technisch Ontwerp Dossier",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 TOD ontwerp", "vorm": "Beoordelings-portfolio" }
+          ]
+        },
+        {
+          "titel": "LU2 Actuatoren en aansturing",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO2 PneuHy tentamen", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO1 Portfolio Actuatoren en Aansturing", "vorm": "Beoordelings-portfolio" }
+          ]
+        },
+        {
+          "titel": "LU3 Materiaalanalyse",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 Materiaalanalyse portfolio", "vorm": "Beoordelings-portfolio" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.2",
+      "naam": "WTB 2.2 Product Automatisering 2",
+      "moduleCode": "M82447-02",
+      "periodes": [2],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Realisatie",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 TOD realisatie", "vorm": "Beroepsproduct (digitaal inleveren)" }
+          ]
+        },
+        {
+          "titel": "LU2 Toegepaste WTB",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 Vermoeiing tentamen", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO2 Tentamen WTO", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO3 FEM-rapport", "vorm": "Beroepsproduct (fysiek inleveren)" }
+          ]
+        },
+        {
+          "titel": "LU3 Procestechnologie",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO2 Tentamen Thermodynamica", "vorm": "Geroosterde schriftelijke inzichttoets" },
+            { "titel": "TO3 Presentatie Energietransitie", "vorm": "Presentatie" },
+            { "titel": "TO1 Portfolio Energietechniek", "vorm": "Beoordelings-portfolio" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2.3",
+      "naam": "Keuzeruimte",
+      "periodes": [3],
+      "leeruitkomsten": []
+    },
+    {
+      "code": "2.4",
+      "naam": "WTB 2.4 Product Automatisering 3",
+      "moduleCode": "M97247-02",
+      "periodes": [4],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Evaluatie en optimalisatie",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 TOD evaluatie en optimalisatie", "vorm": "Beroepsproduct (digitaal inleveren)" }
+          ]
+        },
+        {
+          "titel": "LU2 Dynamische analyse",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 CGI dynamische analyse", "vorm": "Criteriumgericht interview" },
+            { "titel": "TO2 Tentamen differentiaalvergelijkingen", "vorm": "Geroosterde schriftelijke inzichttoets" }
+          ]
+        },
+        {
+          "titel": "LU3 PPO",
+          "studiepunten": 5,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 PPO portfolio", "vorm": "Beoordelings-portfolio" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.1-3.2",
+      "naam": "WTB 3.1-3.2 Stage",
+      "moduleCode": "M45393-01",
+      "periodes": [1, 2],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Technisch OntwerpDossier",
+          "studiepunten": 30,
+          "omschrijving": "Projectbeheer Conceptkeuze Detailontwerp Evaluatie",
+          "toetsonderdelen": []
+        }
+      ]
+    },
+    {
+      "code": "3.3",
+      "naam": "WTB3.3 Onderzoek & Ontwerp van dynamische systemen",
+      "moduleCode": "M11092-01",
+      "periodes": [3],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Dynamische analyse",
+          "studiepunten": 10,
+          "omschrijving": "CGI: Presentatie + verdediging Dynamica en Regeltechniek",
+          "toetsonderdelen": [
+            { "titel": "TO1 CGI Systeemdynamicaportfolio", "vorm": "Criteriumgericht interview" }
+          ]
+        },
+        {
+          "titel": "LU2 PPO",
+          "studiepunten": 3,
+          "omschrijving": "PPO & Onderzoek",
+          "toetsonderdelen": [
+            { "titel": "TO1 Portfolio PPO", "vorm": "Beoordelings-portfolio" }
+          ]
+        },
+        {
+          "titel": "LU3 Onderzoek",
+          "studiepunten": 2,
+          "omschrijving": "",
+          "toetsonderdelen": [
+            { "titel": "TO1 Onderzoeksrapport", "vorm": "Beroepsproduct (digitaal inleveren)" }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3.4",
+      "naam": "Keuzeruimte",
+      "periodes": [4],
+      "leeruitkomsten": []
+    },
+    {
+      "code": "4.1-4.2",
+      "naam": "Keuzeruimte",
+      "periodes": [1, 2],
+      "leeruitkomsten": []
+    },
+    {
+      "code": "4.3-4.4",
+      "naam": "WTB 4.3-4.4 Afstudeerstage",
+      "moduleCode": "M86821-01",
+      "periodes": [3, 4],
+      "leeruitkomsten": [
+        {
+          "titel": "LU1 Technisch OntwerpDossier",
+          "studiepunten": 30,
+          "omschrijving": "Projectbeheer Conceptkeuze Detailontwerp Evaluatie",
+          "toetsonderdelen": []
+        }
+      ]
+    }
+  ]
+}
